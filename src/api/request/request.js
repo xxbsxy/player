@@ -5,6 +5,11 @@ class Request {
 		this.instance = axios.create(config)
 		this.instance.interceptors.request.use(
 			(config) => {
+				if (config.meth === 'post' && !(config.data instanceof FormData)) {
+					config.headers = {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					}
+				}
 				this.loading = ElLoading.service({
 					lock: true,
 					text: '正在请求数据...',

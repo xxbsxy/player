@@ -1,0 +1,62 @@
+<template>
+  <div class="aside">
+    <h3 class="title">发现</h3>
+    <div v-for="item in title" :key="item.name" class="list-item">
+      <img :src="item.imgUrl" alt class="img" />
+      {{ item.name }}
+    </div>
+  </div>
+</template>
+
+<script>
+export default { name: 'Aside' }
+</script>
+<script setup>
+import { reactive } from 'vue'
+const title = reactive([
+  {
+    name: '乐库',
+    url: '/music',
+    imgUrl: require('@/assets/img/aside/music.svg')
+  },
+  {
+    name: '视频',
+    url: '/video',
+    imgUrl: require('@/assets/img/aside/video.svg')
+  },
+  {
+    name: '电台',
+    url: '/radio',
+    imgUrl: require('@/assets/img/aside/radio.svg')
+  },
+  {
+    name: '歌单',
+    url: '/songList',
+    imgUrl: require('@/assets/img/aside/songList.svg')
+  }
+])
+</script>
+<style scoped lang="less">
+.aside {
+  .list-item {
+    margin-left: 20px;
+    margin-top: 5px;
+    cursor: pointer;
+    border-radius: 6px;
+    height: 35px;
+    line-height: 35px;
+    width: 160px;
+    .img {
+      vertical-align: -4px;
+      margin-right: 10px;
+      margin-left: 10px;
+    }
+    &:hover {
+      background-color: #dddfe1;
+    }
+  }
+  .title {
+    margin-left: 30px;
+  }
+}
+</style>

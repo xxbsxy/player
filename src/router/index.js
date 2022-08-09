@@ -1,6 +1,72 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
+	{
+		path: '/',
+		redirect: '/music/newSongs'
+	},
+	{
+		path: '/search',
+		redirect: '/search/song'
+	},
+	{
+		path: '/playlistDetail',
+		redirect: '/playlistDetail/song'
+	},
+	{
+		path: '/music',
+		component: () => import('@/views/music/Music.vue'),
+		children: [
+			{
+				path: 'newSongs',
+				component: () => import('@/views/music/child/new-songs'),
+			},
+			{
+				path: 'recommendPlaylist',
+				component: () => import('@/views/music/child/recommend-playlist'),
+			},
+			{
+				path: 'recommendMv',
+				component: () => import('@/views/music/child/recommend-mv'),
+			}
+		]
+	},
+	{
+		path: '/search',
+		component: () => import('@/views/search/Search'),
+		children: [
+			{
+				path: 'song',
+				component: () => import('../views/search/child/search-song'),
+			},
+			{
+				path: 'mv',
+				component: () => import('../views/search/child/search-mv.vue'),
+			},
+			{
+				path: 'playlist',
+				component: () => import('../views/search/child/search-playlist.vue'),
+			},
+			{
+				path: 'album',
+				component: () => import('../views/search/child/search-album.vue'),
+			}
+		]
+	},
+	{
+		path: '/playlistDetail',
+		component: () => import('../views/playlist-detail/PlaylistDteail.vue'),
+		children: [
+			{
+				path: 'song',
+				component: () => import('../views/playlist-detail/child/playlist-song.vue'),
+			},
+			{
+				path: 'comment',
+				component: () => import('../views/playlist-detail/child/playlist-comment.vue'),
+			}
+		]
+	}
 
 ]
 

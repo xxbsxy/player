@@ -6,3 +6,21 @@ body, html ,#app{
   width: 100%;
   height: 100%;
 }
+.el-header {
+	height: 60px;
+	border-bottom: 1px solid rgb(226, 226, 226);
+}
+.el-aside {
+	width: 200px;
+	border-right: 1px solid rgb(226, 226, 226);
+}
+.el-main {
+	height: 680px;
+}
+.el-footer {
+	height: 80px;
+	border-top: 1px solid rgb(226, 226, 226);
+}
+.el-tabs__nav-wrap::after{
+	width: 0 !important;
+}
