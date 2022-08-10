@@ -2,7 +2,7 @@ import Request from './request/request'
 
 const myRequest = new Request({
 	withCredentials: true,
-	baseURL: 'https://netease-cloud-music-api-cgdcgd.vercel.app/',
+	baseURL: 'http://www.codeman.ink/api/',
 	timeout: 10000,
 })
 export default myRequest
