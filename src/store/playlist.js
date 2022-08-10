@@ -1,12 +1,14 @@
 import { defineStore } from 'pinia'
-import { getPlaylistDetail, getSongDetail } from '@/api/playlist';
+import { getPlaylistDetail, getSongDetail, getPlaylistSort } from '@/api/playlist';
 import { getComment } from '@/api/comment';
 export const playlistStore = defineStore('playlist', {
+	persist: true,
 	state: () => {
 		return {
 			playlistDetail: null,
 			songs: [],
-			comments: []
+			comments: [],
+			playlists: []
 		}
 	},
 	actions: {
@@ -23,5 +25,9 @@ export const playlistStore = defineStore('playlist', {
 			const comment = await getComment({ id, type: 2 })
 			this.comments = comment.data.comments
 		},
+		async getPlaylistSort(cat) {
+			const res = await getPlaylistSort(cat)
+			this.playlists = res.playlists
+		}
 	}
 });

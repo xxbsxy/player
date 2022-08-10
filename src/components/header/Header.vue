@@ -6,8 +6,16 @@
     </div>
     <!-- 前进后退 -->
     <div class="icons">
-      <ArrowLeftBold style="width: 1em; height: 1em; margin-right: 16px" class="left" />
-      <ArrowRightBold style="width: 1em; height: 1em; margin-right: 8px" class="right" />
+      <ArrowLeftBold
+        style="width: 1em; height: 1em; margin-right: 16px"
+        class="left"
+        @click="back"
+      />
+      <ArrowRightBold
+        style="width: 1em; height: 1em; margin-right: 8px"
+        class="right"
+        @click="go"
+      />
     </div>
     <!-- 搜素音乐 -->
     <div>
@@ -80,6 +88,13 @@ const toSearch = () => {
       keyword: keyword.value
     }
   })
+}
+//前进后退
+const back = () => {
+  router.back()
+}
+const go = () => {
+  router.go(1)
 }
 </script>
 <style scoped lang="less">

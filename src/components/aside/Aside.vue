@@ -1,7 +1,7 @@
 <template>
   <div class="aside">
     <h3 class="title">发现</h3>
-    <div v-for="item in title" :key="item.name" class="list-item">
+    <div v-for="item in title" :key="item.name" class="list-item" @click="toModule(item.url)">
       <img :src="item.imgUrl" alt class="img" />
       {{ item.name }}
     </div>
@@ -13,6 +13,8 @@ export default { name: 'Aside' }
 </script>
 <script setup>
 import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const title = reactive([
   {
     name: '乐库',
@@ -31,10 +33,15 @@ const title = reactive([
   },
   {
     name: '歌单',
-    url: '/songList',
+    url: '/playlistSort',
     imgUrl: require('@/assets/img/aside/songList.svg')
   }
 ])
+const toModule = (url) => {
+  router.push({
+    path: url
+  })
+}
 </script>
 <style scoped lang="less">
 .aside {

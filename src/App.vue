@@ -17,7 +17,9 @@
               <router-view></router-view>
             </el-main>
             <!-- 尾部区域 -->
-            <el-footer>Footer</el-footer>
+            <el-footer>
+              <Footer />
+            </el-footer>
           </el-container>
         </el-container>
       </el-container>
@@ -31,6 +33,7 @@ export default { name: 'App' }
 <script setup>
 import Header from './components/header/Header.vue'
 import Aside from './components/aside/Aside.vue'
+import Footer from './components/footer/Footer.vue'
 </script>
 <style scoped lang="less">
 @import './assets/css/base.css';
@@ -47,6 +50,15 @@ import Aside from './components/aside/Aside.vue'
     height: 820px;
     background-color: #fff;
     border-radius: 40px;
+  }
+  .a {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 100;
+    width: 300px;
+    height: 100%;
+    background-color: pink;
   }
 }
 </style>

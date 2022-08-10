@@ -6,6 +6,10 @@ const routes = [
 		redirect: '/music/newSongs'
 	},
 	{
+		path: '/music',
+		redirect: '/music/newSongs'
+	},
+	{
 		path: '/search',
 		redirect: '/search/song'
 	},
@@ -45,11 +49,11 @@ const routes = [
 			},
 			{
 				path: 'playlist',
-				component: () => import('../views/search/child/search-playlist.vue'),
+				component: () => import('../views/search/child/search-playlist.vue')
 			},
 			{
 				path: 'album',
-				component: () => import('../views/search/child/search-album.vue'),
+				component: () => import('../views/search/child/search-album.vue')
 			}
 		]
 	},
@@ -59,14 +63,24 @@ const routes = [
 		children: [
 			{
 				path: 'song',
-				component: () => import('../views/playlist-detail/child/playlist-song.vue'),
+				component: () => import('../views/playlist-detail/child/playlist-song.vue')
 			},
 			{
 				path: 'comment',
-				component: () => import('../views/playlist-detail/child/playlist-comment.vue'),
+				component: () => import('../views/playlist-detail/child/playlist-comment.vue')
 			}
 		]
+	},
+	{
+		path: '/playlistSort',
+		component: () => import('../views/playlist-sort/PlaylistSort.vue')
+	},
+
+	{
+		path: '/playlistQueue',
+		component: () => import('../views/play-queue/PlayQueue.vue')
 	}
+
 
 ]
 

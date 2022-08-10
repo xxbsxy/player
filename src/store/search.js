@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { getSearchResult } from '@/api/search';
 export const searchStore = defineStore('search', {
+	persist: true,
 	state: () => {
 		return {
 			songs: [],

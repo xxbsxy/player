@@ -1,7 +1,7 @@
 <template>
   <div class="new-songs">
     <!-- 播放列表 -->
-    <el-table :data="newSongs" style="width: 100%">
+    <el-table :data="newSongs" style="width: 100%" @cell-dblclick="toPlayMusic">
       <!-- 歌曲名 -->
       <el-table-column prop="name" label="歌曲名" width="460">
         <template #default="scope">
@@ -12,9 +12,13 @@
       <!-- 歌手 -->
       <el-table-column label="歌手" width="320">
         <template #default="scope">
-          <span v-for="(item, index) in scope.row.song.artists">
+          <span
+            v-for="(item, index) in scope.row.song.artists"
+            class="singer-name"
+            v-show="index < 3"
+          >
             <span class="singer">{{ item.name }}</span>
-            <span v-show="index < scope.row.song.artists.length - 1"> &nbsp;/&nbsp; </span>
+            <span v-show="index < scope.row.song.artists.length - 1"> &nbsp;/&nbsp;</span>
           </span>
         </template>
       </el-table-column>
@@ -42,6 +46,9 @@ import { storeToRefs } from 'pinia'
 import { formatMillisecond } from '@/utils/formatMillisecond'
 const store = musicStore()
 const { newSongs } = storeToRefs(store) //获取推荐音乐
+const toPlayMusic = (row) => {
+  store.getSongUrl(row.id)
+}
 onMounted(() => {
   store.getNewSongs()
 })

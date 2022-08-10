@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { getUserMessages } from '@/api/user';
 export const userStore = defineStore('user', {
+	persist: true,
 	state: () => {
 		return {
 			profile: null

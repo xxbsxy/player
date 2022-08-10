@@ -1,6 +1,6 @@
 <template>
   <!-- 播放列表 -->
-  <el-table :data="props.songs" style="width: 100%">
+  <el-table :data="props.songs" style="width: 100%" @cell-dblclick="toPlayMusic">
     <!-- 歌曲名 -->
     <el-table-column prop="name" label="歌曲名" width="460">
       <template #default="scope">
@@ -34,6 +34,9 @@
 export default { name: 'PlayList' }
 </script>
 <script setup>
+import { footerStore } from '@/store/footer'
+import { storeToRefs } from 'pinia'
+const store = footerStore()
 import { formatMillisecond } from '@/utils/formatMillisecond'
 import { useRouter } from 'vue-router'
 const router = useRouter()
@@ -49,6 +52,9 @@ const props = defineProps({
     default: true
   }
 })
+const toPlayMusic = (row) => {
+  store.getSongUrl(row.id)
+}
 </script>
 <style scoped lang="less">
 .pic {
