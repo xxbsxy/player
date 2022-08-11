@@ -79,8 +79,15 @@ const routes = [
 	{
 		path: '/playlistQueue',
 		component: () => import('../views/play-queue/PlayQueue.vue')
+	},
+	{
+		path: '/rank',
+		component: () => import('../views/rank/Rank.vue')
+	},
+	{
+		path: '/video',
+		component: () => import('../views/video/Video.vue')
 	}
-
 
 ]
 

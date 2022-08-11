@@ -26,15 +26,16 @@ const title = reactive([
     url: '/video',
     imgUrl: require('@/assets/img/aside/video.svg')
   },
-  {
-    name: '电台',
-    url: '/radio',
-    imgUrl: require('@/assets/img/aside/radio.svg')
-  },
+
   {
     name: '歌单',
     url: '/playlistSort',
     imgUrl: require('@/assets/img/aside/songList.svg')
+  },
+  {
+    name: '排行榜',
+    url: '/rank',
+    imgUrl: require('@/assets/img/aside/rank.svg')
   }
 ])
 const toModule = (url) => {
