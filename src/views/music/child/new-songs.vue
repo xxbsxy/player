@@ -17,7 +17,7 @@
             class="singer-name"
             v-show="index < 3"
           >
-            <span class="singer">{{ item.name }}</span>
+            <span class="singer" @click="toSingerDetail(item.id)">{{ item.name }}</span>
             <span v-show="index < scope.row.song.artists.length - 1"> &nbsp;/&nbsp;</span>
           </span>
         </template>
@@ -49,8 +49,19 @@ const { newSongs } = storeToRefs(store) //获取推荐音乐
 const toPlayMusic = (row) => {
   store.getSongUrl(row.id)
 }
+//点击歌手去歌手详情
+const toSingerDetail = (id) => {
+  router.push({
+    path: '/singerDetail',
+    query: {
+      id
+    }
+  })
+}
 onMounted(() => {
-  store.getNewSongs()
+  if (newSongs.length === 0) {
+    store.getNewSongs()
+  }
 })
 </script>
 <style scoped lang="less">

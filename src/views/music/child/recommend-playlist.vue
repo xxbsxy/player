@@ -13,7 +13,9 @@ import Playlist from '@/components/playlist/Playlist.vue'
 const store = musicStore()
 const { recommendPlaylist } = storeToRefs(store) //获取推荐歌单
 onMounted(() => {
-  store.getRecommendPlaylist()
+  if (recommendPlaylist.length === 0) {
+    store.getRecommendPlaylist()
+  }
 })
 </script>
 <style scoped lang="less"></style>

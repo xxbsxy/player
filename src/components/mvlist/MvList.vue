@@ -3,7 +3,7 @@
     <el-col :span="8" v-for="item in prop.mvs" :key="item.id">
       <div class="mv-list">
         <!-- mv图片 -->
-        <img :src="item.cover" alt class="img" />
+        <img :src="item.cover || item.imgurl16v9" alt class="img" />
         <!-- 播放按钮 -->
         <div class="play-icon"></div>
       </div>

@@ -13,7 +13,9 @@ import MvList from '@/components/mvlist/MvList.vue'
 const store = musicStore()
 const { recommendMv } = storeToRefs(store) //获取推荐mv
 onMounted(() => {
-  store.getRecommendMv()
+  if (recommendMv.length === 0) {
+    store.getRecommendMv()
+  }
 })
 </script>
 <style scoped lang="less"></style>

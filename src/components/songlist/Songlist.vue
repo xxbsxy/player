@@ -12,7 +12,7 @@
     <el-table-column label="歌手" width="320">
       <template #default="scope">
         <span v-for="(item, index) in scope.row.ar">
-          <span class="singer">{{ item.name }}</span>
+          <span class="singer" @click="toSingerDetail(item.id)">{{ item.name }}</span>
           <span v-show="index < scope.row.ar.length - 1">&nbsp;/&nbsp;</span>
         </span>
       </template>
@@ -52,6 +52,16 @@ const props = defineProps({
     default: true
   }
 })
+//点击歌手去歌手详情
+const toSingerDetail = (id) => {
+  router.push({
+    path: '/singerDetail',
+    query: {
+      id
+    }
+  })
+}
+//双击播放音乐
 const toPlayMusic = (row) => {
   store.getSongUrl(row.id)
 }

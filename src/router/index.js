@@ -18,6 +18,10 @@ const routes = [
 		redirect: '/playlistDetail/song'
 	},
 	{
+		path: '/singerDetail',
+		redirect: '/singerDetail/hotSong'
+	},
+	{
 		path: '/music',
 		component: () => import('@/views/music/Music.vue'),
 		children: [
@@ -87,6 +91,28 @@ const routes = [
 	{
 		path: '/video',
 		component: () => import('../views/video/Video.vue')
+	},
+	{
+		path: '/singerDetail',
+		component: () => import('../views/singer-detail/SingerDetail.vue'),
+		children: [
+			{
+				path: 'hotSong',
+				component: () => import('../views/singer-detail/child/singer-hot-song.vue')
+			},
+			{
+				path: 'hotMv',
+				component: () => import('../views/singer-detail/child/singer-hot-mv.vue')
+			},
+			{
+				path: 'similar',
+				component: () => import('../views/singer-detail/child/singer-similar.vue')
+			},
+			{
+				path: 'introduce',
+				component: () => import('../views/singer-detail/child/singer-introduce.vue')
+			}
+		]
 	}
 
 ]
