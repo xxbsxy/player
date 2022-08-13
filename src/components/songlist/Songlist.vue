@@ -11,16 +11,20 @@
     <!-- 歌手 -->
     <el-table-column label="歌手" width="320">
       <template #default="scope">
-        <span v-for="(item, index) in scope.row.ar">
-          <span class="singer" @click="toSingerDetail(item.id)">{{ item.name }}</span>
-          <span v-show="index < scope.row.ar.length - 1">&nbsp;/&nbsp;</span>
-        </span>
+        <p class="singer-colunm">
+          <span v-for="(item, index) in scope.row.ar">
+            <span class="singer" @click="toSingerDetail(item.id)">{{ item.name }}</span>
+            <span v-show="index < scope.row.ar.length - 1">&nbsp;/&nbsp;</span>
+          </span>
+        </p>
       </template>
     </el-table-column>
     <!-- 专辑 -->
     <el-table-column prop="al.name" label="专辑" width="320">
       <template #default="scope">
-        <span class="albumName">{{ scope.row.al.name }}</span>
+        <span class="albumName" @click="toAlbumDetail(scope.row.al.id)">{{
+          scope.row.al.name
+        }}</span>
       </template>
     </el-table-column>
     <!-- 时间 -->
@@ -61,6 +65,14 @@ const toSingerDetail = (id) => {
     }
   })
 }
+const toAlbumDetail = (id) => {
+  router.push({
+    path: '/albumDetail',
+    query: {
+      id
+    }
+  })
+}
 //双击播放音乐
 const toPlayMusic = (row) => {
   store.getSongUrl(row.id)
@@ -86,5 +98,11 @@ span {
   &:hover {
     color: #6ca5fe;
   }
+}
+.singer-colunm {
+  width: 230px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>

@@ -13,17 +13,11 @@
 export default { name: 'singer-introduce' }
 </script>
 <script setup>
-import { onMounted } from 'vue'
 import MvList from '@/components/mvlist/MvList.vue'
 import { singerStore } from '@/store/singer'
 import { storeToRefs } from 'pinia'
-import { useRoute } from 'vue-router'
-const route = useRoute()
 const store = singerStore()
 const { singerIntroduce } = storeToRefs(store)
-onMounted(() => {
-  store.getSingerIntroduce(route.query.id)
-})
 </script>
 <style scoped lang="less">
 .singer-introduce {

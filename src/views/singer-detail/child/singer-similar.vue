@@ -13,26 +13,20 @@
 export default { name: 'singer-similar' }
 </script>
 <script setup>
-import { onMounted } from 'vue'
 import { singerStore } from '@/store/singer'
 import { storeToRefs } from 'pinia'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 const router = useRouter()
-const route = useRoute()
-
 const store = singerStore()
 const { singerSimilar } = storeToRefs(store)
 const toSingerDetail = (id) => {
   router.push({
-    path: '/singerDetail/hotSong',
+    path: '/singerDetail',
     query: {
       id
     }
   })
 }
-onMounted(() => {
-  store.getSingerSimilar(route.query.id)
-})
 </script>
 <style scoped lang="less">
 .singer-similar {

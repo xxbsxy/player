@@ -1,11 +1,11 @@
 <template>
-  <el-tabs class="demo-tabs" v-model="activeName" @tab-change="toModule">
-    <el-tab-pane
-      v-for="item in titleList"
-      :label="item.label"
-      :name="item.name"
-      :key="item.name"
-    ></el-tab-pane>
+  <el-tabs class="demo-tabs" v-model="activeName">
+    <el-tab-pane label="歌曲" name="songs">
+      <playlist-song></playlist-song>
+    </el-tab-pane>
+    <el-tab-pane label="评论" name="comment">
+      <playlist-comment></playlist-comment>
+    </el-tab-pane>
   </el-tabs>
 </template>
 
@@ -13,29 +13,10 @@
 export default { name: 'Tabs' }
 </script>
 <script setup>
-import { ref, reactive } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-const router = useRouter()
-const route = useRoute()
-
+import PlaylistSong from './playlist-song.vue'
+import PlaylistComment from './playlist-comment.vue'
+import { ref } from 'vue'
 let activeName = ref('songs')
-const titleList = reactive([
-  { label: '歌曲', name: 'songs', url: '/playlistDetail/song' },
-  { label: '评论', name: 'comment', url: '/playlistDetail/comment' }
-])
-//点击到相关模块
-const toModule = (name) => {
-  titleList.forEach((item) => {
-    if (item.name === name) {
-      router.push({
-        path: item.url,
-        query: {
-          id: route.query.id
-        }
-      })
-    }
-  })
-}
 </script>
 <style scoped lang="less">
 .demo-tabs {

@@ -15,18 +15,22 @@ export const musicStore = defineStore('music', {
 		}
 	},
 	actions: {
-		async getNewSongs() {
+		async getHomeMusic() {
 			const res = await getNewSongs()
 			this.newSongs = res.result
+			const res1 = await getRecommendPlaylist()
+			this.recommendPlaylist = res1.result
+			const res2 = await getRecommendMv()
+			this.recommendMv = res2.data
 		},
-		async getRecommendPlaylist() {
-			const res = await getRecommendPlaylist()
-			this.recommendPlaylist = res.result
-		},
-		async getRecommendMv() {
-			const res = await getRecommendMv()
-			this.recommendMv = res.data
-		},
+		// async getRecommendPlaylist() {
+		// 	const res1 = await getRecommendPlaylist()
+		// 	this.recommendPlaylist = res1.result
+		// },
+		// async getRecommendMv() {
+		// 	const res2 = await getRecommendMv()
+		// 	this.recommendMv = res2.data
+		// },
 
 		async getSongUrl(id) {
 			const footer = footerStore()
@@ -34,7 +38,6 @@ export const musicStore = defineStore('music', {
 			const song = await getSongDetail(id)
 			footer.song = song.songs[0]
 			footer.song.url = res.data[0].url
-
 		}
 
 

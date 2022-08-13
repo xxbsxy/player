@@ -23,6 +23,7 @@
           </el-container>
         </el-container>
       </el-container>
+      <!-- <div class="draewer"></div> -->
     </div>
   </div>
 </template>
@@ -34,6 +35,8 @@ export default { name: 'App' }
 import Header from './components/header/Header.vue'
 import Aside from './components/aside/Aside.vue'
 import Footer from './components/footer/Footer.vue'
+import { ref } from 'vue'
+const drawer = ref(true)
 </script>
 <style scoped lang="less">
 @import './assets/css/base.css';
@@ -42,16 +45,18 @@ import Footer from './components/footer/Footer.vue'
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
   width: 100%;
   height: 100%;
   background-color: #edeef3;
   .container {
+    position: relative;
     width: 1500px;
     height: 820px;
     background-color: #fff;
     border-radius: 40px;
   }
-  .a {
+  .draewer {
     position: absolute;
     right: 0;
     top: 0;
@@ -59,6 +64,7 @@ import Footer from './components/footer/Footer.vue'
     width: 300px;
     height: 100%;
     background-color: pink;
+    border-radius: 0 40px 40px 0;
   }
 }
 </style>

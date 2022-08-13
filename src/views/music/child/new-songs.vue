@@ -40,10 +40,11 @@
 export default { name: 'new-songs' }
 </script>
 <script setup>
-import { onMounted } from 'vue'
 import { musicStore } from '@/store/music'
 import { storeToRefs } from 'pinia'
 import { formatMillisecond } from '@/utils/formatMillisecond'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const store = musicStore()
 const { newSongs } = storeToRefs(store) //获取推荐音乐
 const toPlayMusic = (row) => {
@@ -58,11 +59,6 @@ const toSingerDetail = (id) => {
     }
   })
 }
-onMounted(() => {
-  if (newSongs.length === 0) {
-    store.getNewSongs()
-  }
-})
 </script>
 <style scoped lang="less">
 .pic {

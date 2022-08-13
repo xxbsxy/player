@@ -3,13 +3,12 @@
 </template>
 
 <script>
-export default { name: 'playlist-comment' }
+export default { name: 'album-comment' }
 </script>
 <script setup>
-import Comment from '@/components/comment/Comment.vue'
-import { playlistStore } from '@/store/playlist'
+import { albumStore } from '@/store/album'
 import { storeToRefs } from 'pinia'
-const store = playlistStore()
+const store = albumStore()
 const { comments } = storeToRefs(store)
 </script>
 <style scoped lang="less"></style>

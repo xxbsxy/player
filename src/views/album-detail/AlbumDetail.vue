@@ -1,13 +1,13 @@
 <template>
-  <playlist-describe></playlist-describe>
+  <album-description></album-description>
   <Tabs />
 </template>
 
 <script>
-export default { name: 'PlaylistDteail' }
+export default { name: 'AlbumDetail' }
 </script>
 <script setup>
+import AlbumDescription from './child/album-description'
 import Tabs from './child/Tabs.vue'
-import PlaylistDescribe from './child/playlist-describe.vue'
 </script>
 <style scoped lang="less"></style>

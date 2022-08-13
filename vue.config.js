@@ -14,14 +14,16 @@ module.exports = defineConfig({
 		],
 		devServer: {
 
-			proxy: {
-				'/': {
-					ws: false
+			proxy: { //目的是解决跨域，若测试环境不需要跨域，则不需要进行该配置
+				'/api': {
+					target: 'http://43.142.179.253/', // 目标 API 地址
+					changeOrigin: true, //开启跨域
+					pathRewrite: {
+						'^/api': ''
+					}
 				}
-
-
 			}
-
 		}
-	},
+	}
 })
+

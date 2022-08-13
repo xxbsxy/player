@@ -18,11 +18,8 @@
 export default { name: 'singer-description' }
 </script>
 <script setup>
-import { onMounted } from 'vue'
 import { singerStore } from '@/store/singer'
 import { storeToRefs } from 'pinia'
-import { useRoute } from 'vue-router'
-const route = useRoute()
 const store = singerStore()
 const { singer } = storeToRefs(store)
 </script>
@@ -39,7 +36,7 @@ const { singer } = storeToRefs(store)
   .right-area {
     margin-left: 20px;
     .singer-size {
-      margin-top: 50px;
+      margin-top: 20px;
       span {
         margin-left: 20px;
         &:nth-child(1) {

@@ -3,41 +3,15 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const routes = [
 	{
 		path: '/',
-		redirect: '/music/newSongs'
-	},
-	{
-		path: '/music',
-		redirect: '/music/newSongs'
+		redirect: '/music'
 	},
 	{
 		path: '/search',
 		redirect: '/search/song'
 	},
 	{
-		path: '/playlistDetail',
-		redirect: '/playlistDetail/song'
-	},
-	{
-		path: '/singerDetail',
-		redirect: '/singerDetail/hotSong'
-	},
-	{
 		path: '/music',
-		component: () => import('@/views/music/Music.vue'),
-		children: [
-			{
-				path: 'newSongs',
-				component: () => import('@/views/music/child/new-songs'),
-			},
-			{
-				path: 'recommendPlaylist',
-				component: () => import('@/views/music/child/recommend-playlist'),
-			},
-			{
-				path: 'recommendMv',
-				component: () => import('@/views/music/child/recommend-mv'),
-			}
-		]
+		component: () => import('@/views/music/Music.vue')
 	},
 	{
 		path: '/search',
@@ -63,17 +37,8 @@ const routes = [
 	},
 	{
 		path: '/playlistDetail',
-		component: () => import('../views/playlist-detail/PlaylistDteail.vue'),
-		children: [
-			{
-				path: 'song',
-				component: () => import('../views/playlist-detail/child/playlist-song.vue')
-			},
-			{
-				path: 'comment',
-				component: () => import('../views/playlist-detail/child/playlist-comment.vue')
-			}
-		]
+		component: () => import('../views/playlist-detail/PlaylistDteail.vue')
+
 	},
 	{
 		path: '/playlistSort',
@@ -94,25 +59,11 @@ const routes = [
 	},
 	{
 		path: '/singerDetail',
-		component: () => import('../views/singer-detail/SingerDetail.vue'),
-		children: [
-			{
-				path: 'hotSong',
-				component: () => import('../views/singer-detail/child/singer-hot-song.vue')
-			},
-			{
-				path: 'hotMv',
-				component: () => import('../views/singer-detail/child/singer-hot-mv.vue')
-			},
-			{
-				path: 'similar',
-				component: () => import('../views/singer-detail/child/singer-similar.vue')
-			},
-			{
-				path: 'introduce',
-				component: () => import('../views/singer-detail/child/singer-introduce.vue')
-			}
-		]
+		component: () => import('../views/singer-detail/SingerDetail.vue')
+	},
+	{
+		path: '/albumDetail',
+		component: () => import('../views/album-detail/AlbumDetail.vue')
 	}
 
 ]

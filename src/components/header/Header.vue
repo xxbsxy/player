@@ -28,8 +28,8 @@
       />
     </div>
     <!-- 登录 -->
-    <div class="login" @click="dialogVisible = true">
-      <span v-if="!profile">登录</span>
+    <div class="login" >
+      <span v-if="!profile" @click="dialogVisible = true">登录</span>
       <div v-if="profile">
         <el-avatar :src="profile.avatarUrl"></el-avatar>
         <span class="nickname">{{ profile.nickname }}</span>
