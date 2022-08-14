@@ -5,10 +5,14 @@ class Request {
 		this.instance = axios.create(config)
 		this.instance.interceptors.request.use(
 			(config) => {
-				if (config.meth === 'post' && !(config.data instanceof FormData)) {
+				if (config.method === 'post' && !(config.data instanceof FormData)) {
 					config.headers = {
 						'Content-Type': 'application/x-www-form-urlencoded'
 					}
+				}
+				config.headers = {
+					'Content-Type': 'text/javascript; charset=utf-8',
+					'X-Content-Type-Options': 'no-sniff'
 				}
 				this.loading = ElLoading.service({
 					lock: true,
