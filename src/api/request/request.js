@@ -10,10 +10,6 @@ class Request {
 						'Content-Type': 'application/x-www-form-urlencoded'
 					}
 				}
-				config.headers = {
-					'Content-Type': 'text/javascript; charset=utf-8',
-					'X-Content-Type-Options': 'no-sniff'
-				}
 				this.loading = ElLoading.service({
 					lock: true,
 					text: '正在请求数据...',
