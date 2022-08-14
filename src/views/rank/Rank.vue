@@ -13,9 +13,7 @@ import { storeToRefs } from 'pinia'
 const store = rankStore()
 const { rankList } = storeToRefs(store)
 onMounted(() => {
-  if (rankList.length === 0) {
-    store.getRank()
-  }
+  store.getRank()
 })
 </script>
 <style scoped lang="less"></style>

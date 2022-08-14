@@ -1,15 +1,24 @@
 <template>
-  <audio :src="currentSong.url" ref="audio" @canplay="getDuration" @timeupdate="timeupdate"></audio>
-  <div class="footer" v-if="currentSong">
+  <audio
+    :src="currentSong.url"
+    ref="audio"
+    @canplay="getDuration"
+    @timeupdate="timeupdate"
+    v-if="currentSong"
+  ></audio>
+  <div class="footer">
     <!-- 音乐图片名称区域 -->
     <div class="left-area">
-      <img :src="currentSong.al.picUrl" alt="" class="pic" />
-      <div class="name">
-        <div class="song-name">{{ currentSong.name }}</div>
-        <span v-for="(item, index) in currentSong.ar" :key="item.id" class="al-name">
-          {{ item.name }}
-          <span v-show="index < currentSong.ar.length - 1">/&nbsp;</span>
-        </span>
+      <img src="../../assets/img/header/vae.jpg" alt="" class="pic" v-if="!currentSong" />
+      <div v-if="currentSong" class="song">
+        <img :src="currentSong.al.picUrl" alt="" class="pic" />
+        <div class="name">
+          <div class="song-name">{{ currentSong.name }}</div>
+          <span v-for="(item, index) in currentSong.ar" :key="item.id" class="al-name">
+            {{ item.name }}
+            <span v-show="index < currentSong.ar.length - 1">/&nbsp;</span>
+          </span>
+        </div>
       </div>
     </div>
     <!-- 控制音乐区域 -->
@@ -72,7 +81,7 @@
 export default { name: 'Footer' }
 </script>
 <script setup>
-import { computed, watch, reactive, ref, nextTick } from 'vue'
+import { computed, watch, reactive, ref, nextTick, beforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { footerStore } from '@/store/footer'
@@ -87,7 +96,7 @@ let playActive = ref(false)
 let platState = ref(-1) //-1表示列表循环 0表示随机播放 1表示单曲循环
 let songSlider = ref() //音乐播放进度条
 let volume = ref(100)
-const endTime = ref('') //播放时长
+const endTime = ref('00 : 00') //播放时长
 const currentTime = ref('00 : 00') //音乐实时播放时间
 const audio = ref()
 
@@ -220,7 +229,6 @@ watch(song, (newValue) => {
       id: newValue.id,
       url: newValue.url
     }
-    state.currentIndex++
     state.playlist.splice(state.currentIndex, 0, obj)
   }
 })
@@ -232,7 +240,6 @@ watch(song, (newValue) => {
   width: 100%;
   height: 100%;
   .left-area {
-    display: flex;
     width: 250px;
     overflow: hidden;
     .pic {
@@ -240,11 +247,14 @@ watch(song, (newValue) => {
       height: 60px;
       border-radius: 10px;
     }
-    .name {
-      margin-left: 12px;
-      .al-name {
-        position: relative;
-        top: 16px;
+    .song {
+      display: flex;
+      .name {
+        margin-left: 12px;
+        .al-name {
+          position: relative;
+          top: 16px;
+        }
       }
     }
   }
@@ -252,7 +262,6 @@ watch(song, (newValue) => {
   .contral {
     width: 600px;
     height: 60px;
-    // background-color: pink;
     margin-left: 60px;
     .icon {
       margin-left: 175px;

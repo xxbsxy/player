@@ -10,11 +10,11 @@ class Request {
 						'Content-Type': 'application/x-www-form-urlencoded'
 					}
 				}
-				this.loading = ElLoading.service({
-					lock: true,
-					text: '正在请求数据...',
-					background: 'rgba(0, 0 ,0, 0.1)'
-				})
+				// this.loading = ElLoading.service({
+				// 	lock: true,
+				// 	text: '正在请求数据...',
+				// 	background: 'rgba(0, 0 ,0, 0.1)'
+				// })
 				return config
 			},
 			(err) => {
@@ -23,7 +23,7 @@ class Request {
 		)
 		this.instance.interceptors.response.use(
 			(res) => {
-				this.loading.close()
+				// this.loading.close()
 				return res.data
 			},
 			(err) => {
