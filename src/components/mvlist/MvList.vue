@@ -3,7 +3,7 @@
     <el-col :span="8" v-for="item in prop.mvs" :key="item.id">
       <div class="mv-list">
         <!-- mv图片 -->
-        <img :src="item.cover || item.imgurl16v9" alt class="img" />
+        <img :src="item.cover || item.imgurl16v9" alt class="img" @click="toMvDetail(item.id)" />
         <!-- 播放按钮 -->
         <div class="play-icon"></div>
       </div>
@@ -17,6 +17,8 @@
 export default { name: 'MvList' }
 </script>
 <script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const prop = defineProps({
   mvs: {
     type: Array,
@@ -25,6 +27,14 @@ const prop = defineProps({
     }
   }
 })
+const toMvDetail = (id) => {
+  router.push({
+    path: '/mvDetail',
+    query: {
+      id
+    }
+  })
+}
 </script>
 <style scoped lang="less">
 .mv-list {

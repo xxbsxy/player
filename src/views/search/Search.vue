@@ -8,7 +8,7 @@
 export default { name: 'Search' }
 </script>
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import Tabs from './child/Tabs.vue'
 import { searchStore } from '@/store/search'
 import { storeToRefs } from 'pinia'
@@ -16,8 +16,12 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const store = searchStore()
 // const {} = storeToRefs(store)
-onMounted(() => {
-  store.getSearchResult({ keywords: route.query.keyword, type: 1 })
-})
+watch(
+  () => route.query.keyword,
+  (newvalue) => {
+    store.getSearchResult({ keywords: route.query.keyword, type: 1 })
+  },
+  { immediate: true, deep: true }
+)
 </script>
 <style scoped lang="less"></style>

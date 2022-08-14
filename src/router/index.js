@@ -64,6 +64,10 @@ const routes = [
 	{
 		path: '/albumDetail',
 		component: () => import('../views/album-detail/AlbumDetail.vue')
+	},
+	{
+		path: '/mvDetail',
+		component: () => import('../views/mv-detail/MvDteail.vue')
 	}
 
 ]

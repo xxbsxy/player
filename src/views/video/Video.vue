@@ -85,7 +85,10 @@ onMounted(() => {
 .area,
 .order {
   display: flex;
+  margin-top: 20px;
   h5 {
+    position: relative;
+    top: 5px;
     margin: 0;
     padding: 0;
   }
@@ -95,13 +98,16 @@ onMounted(() => {
     border-radius: 10px;
     color: rgb(73, 73, 73);
     cursor: pointer;
-    &:hover {
-      color: rgb(14, 14, 14);
-    }
   }
   .active {
     background-color: #fcebeb;
     color: rgb(175, 41, 41);
   }
+}
+.type {
+  margin-top: 0;
+}
+.order {
+  margin-bottom: 20px;
 }
 </style>
