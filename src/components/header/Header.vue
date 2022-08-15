@@ -28,11 +28,21 @@
       />
     </div>
     <!-- 登录 -->
-    <div class="login" >
+    <div class="login">
       <span v-if="!profile" @click="dialogVisible = true">登录</span>
       <div v-if="profile">
-        <el-avatar :src="profile.avatarUrl"></el-avatar>
-        <span class="nickname">{{ profile.nickname }}</span>
+        <el-dropdown>
+          <div>
+            <el-avatar :src="profile.avatarUrl"></el-avatar>
+            <span class="nickname">{{ profile.nickname }}</span>
+          </div>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="toUserDetail(profile.userId)">个人中心</el-dropdown-item>
+              <el-dropdown-item @click="Logout">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
     </div>
     <!-- 登录对话框 -->
@@ -80,12 +90,24 @@ const login = () => {
   store.getUserMessages(accountForm)
   dialogVisible.value = false
 }
+const Logout = () => {
+  console.log(1)
+  store.UserLogout()
+}
 //按下回车进行搜素
 const toSearch = () => {
   router.push({
     path: '/search',
     query: {
       keyword: keyword.value
+    }
+  })
+}
+const toUserDetail = (id) => {
+  router.push({
+    path: '/userDetail',
+    query: {
+      id
     }
   })
 }

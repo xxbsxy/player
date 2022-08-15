@@ -5,6 +5,16 @@
       <img :src="item.imgUrl" alt class="img" />
       {{ item.name }}
     </div>
+    <h5>创建的歌单 <span v-if="userPlaylist.length === 0">(登陆查看)</span></h5>
+    <div
+      v-for="item in userPlaylist"
+      :key="item.id"
+      @click="toPlayListDetail(item.id)"
+      class="user-playlist"
+    >
+      <img :src="item.coverImgUrl" alt />
+      <p>{{ item.name }}</p>
+    </div>
   </div>
 </template>
 
@@ -12,8 +22,12 @@
 export default { name: 'Aside' }
 </script>
 <script setup>
-import { reactive } from 'vue'
+import { reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { userStore } from '@/store/user'
+import { storeToRefs } from 'pinia'
+const store = userStore()
+const { userPlaylist } = storeToRefs(store)
 const router = useRouter()
 const title = reactive([
   {
@@ -43,6 +57,14 @@ const toModule = (url) => {
     path: url
   })
 }
+const toPlayListDetail = (id) => {
+  router.push({
+    path: '/playlistDetail',
+    query: {
+      id
+    }
+  })
+}
 </script>
 <style scoped lang="less">
 .aside {
@@ -63,8 +85,39 @@ const toModule = (url) => {
       background-color: #dddfe1;
     }
   }
+  .user-playlist {
+    display: flex;
+    margin-left: 20px;
+    margin-top: 15px;
+    border-radius: 5px;
+    width: 165px;
+    cursor: pointer;
+    &:hover {
+      background-color: #dddfe1;
+    }
+    img {
+      width: 35px;
+      height: 35px;
+      border-radius: 5px;
+    }
+    p {
+      margin: 0;
+      margin-left: 10px;
+      width: 120px;
+      height: 35px;
+      line-height: 35px;
+      font-size: 14px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
   .title {
     margin-left: 30px;
+  }
+  h5 {
+    margin-left: 20px;
+    color: #6f6f6f;
   }
 }
 </style>

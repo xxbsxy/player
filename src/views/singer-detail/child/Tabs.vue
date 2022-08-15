@@ -10,9 +10,6 @@
       <el-tab-pane label="歌手详情" name="introduce">
         <singer-introduce></singer-introduce>
       </el-tab-pane>
-      <el-tab-pane label="相似歌手" name="similar">
-        <singer-similar></singer-similar>
-      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -24,8 +21,6 @@ export default { name: 'Tabs' }
 import SingerHotMv from './singer-hot-mv.vue'
 import SingerHotSong from './singer-hot-song.vue'
 import SingerIntroduce from './singer-introduce.vue'
-import SingerSimilar from './singer-similar.vue'
-
 import { ref, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()

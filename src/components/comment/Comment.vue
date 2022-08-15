@@ -14,7 +14,12 @@
   <h3>精彩评论</h3>
   <div v-for="item in props.comments" :key="item.id" class="comment">
     <div class="left-area">
-      <el-avatar :src="item.user.avatarUrl" :size="50"></el-avatar>
+      <el-avatar
+        :src="item.user.avatarUrl"
+        :size="50"
+        @click="toAlbumDetail(item.user.userId)"
+        class="avatar"
+      ></el-avatar>
     </div>
     <div class="right-area">
       <div class="nickname">{{ item.user.nickname }}</div>
@@ -34,6 +39,8 @@ export default { name: 'Comment' }
 <script setup>
 import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 let content = ref('')
 const props = defineProps({
   comments: {
@@ -51,6 +58,14 @@ const publishComment = () => {
     content.value = ''
   }
 }
+const toAlbumDetail = (id) => {
+  router.push({
+    path: '/userDetail',
+    query: {
+      id
+    }
+  })
+}
 </script>
 <style scoped lang="less">
 .comment-btn {
@@ -65,9 +80,11 @@ const publishComment = () => {
 }
 .comment {
   display: flex;
-
   padding: 20px 0;
   border-bottom: 1px solid rgb(232, 232, 232);
+  .avatar {
+    cursor: pointer;
+  }
   .right-area {
     margin-left: 20px;
     color: rgb(79, 79, 79);

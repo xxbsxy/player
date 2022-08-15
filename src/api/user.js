@@ -7,3 +7,25 @@ export function getUserMessages(account) {
 		data: account
 	})
 }
+export function getUserSongList(uid) {
+	return myRequest.request({
+		url: '/user/playlist',
+		params: {
+			uid
+		}
+	})
+}
+
+export function getUserDetail(uid) {
+	return myRequest.request({
+		url: '/user/detail',
+		params: {
+			uid
+		}
+	})
+}
+export function UserLogout() {
+	return myRequest.request({
+		url: '/logout',
+	})
+}

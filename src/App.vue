@@ -54,7 +54,7 @@ const drawer = ref(true)
     width: 1500px;
     height: 820px;
     background-color: #fff;
-    border-radius: 40px;
+    border-radius: 30px;
   }
   .draewer {
     position: absolute;
@@ -64,7 +64,7 @@ const drawer = ref(true)
     width: 300px;
     height: 100%;
     background-color: pink;
-    border-radius: 0 40px 40px 0;
+    border-radius: 0 30px 30px 0;
   }
 }
 </style>

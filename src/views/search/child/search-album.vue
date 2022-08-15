@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="albums" style="width: 100%" :show-header="false">
+  <el-table :data="albums" style="width: 100%" :show-header="false" @cell-dblclick="toAlbumDetail">
     <!-- 专辑名称 -->
     <el-table-column width="500">
       <template #default="scope">
@@ -35,8 +35,18 @@ export default { name: 'search-album' }
 import { searchStore } from '@/store/search'
 import { storeToRefs } from 'pinia'
 import { formatTimeStamp } from '@/utils/formatTimeStamp'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const store = searchStore()
 const { albums } = storeToRefs(store)
+const toAlbumDetail = (row) => {
+  router.push({
+    path: '/albumDetail',
+    query: {
+      id: row.id
+    }
+  })
+}
 </script>
 <style scoped lang="less">
 .pic {

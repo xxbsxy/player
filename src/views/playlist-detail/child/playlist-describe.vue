@@ -35,7 +35,7 @@
 export default { name: 'playlist-describe' }
 </script>
 <script setup>
-import { onMounted } from 'vue'
+import { watch } from 'vue'
 import { playlistStore } from '@/store/playlist'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
@@ -44,9 +44,15 @@ import { formatPlayCount } from '@/utils/formatPlayCount'
 const route = useRoute()
 const store = playlistStore()
 const { playlistDetail } = storeToRefs(store)
-onMounted(() => {
-  store.getPlaylistDetail(route.query.id)
-})
+watch(
+  () => route.query.id,
+  (newvalue) => {
+    if (newvalue) {
+      store.getPlaylistDetail(newvalue)
+    }
+  },
+  { immediate: true, deep: true }
+)
 </script>
 <style scoped lang="less">
 .playlist-describe {

@@ -15,11 +15,12 @@ import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 const store = searchStore()
-// const {} = storeToRefs(store)
 watch(
   () => route.query.keyword,
   (newvalue) => {
-    store.getSearchResult({ keywords: route.query.keyword, type: 1 })
+    if (newvalue) {
+      store.getSearchResult({ keywords: route.query.keyword, type: 1 })
+    }
   },
   { immediate: true, deep: true }
 )

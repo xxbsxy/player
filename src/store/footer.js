@@ -4,7 +4,12 @@ export const footerStore = defineStore('footer', {
 	persist: true,
 	state: () => {
 		return {
-			song: {}
+			song: {},
+			state: {
+				playlist: [
+				],
+				currentIndex: 0
+			}
 		}
 	},
 	actions: {
