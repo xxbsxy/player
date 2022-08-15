@@ -87,10 +87,10 @@ import { ElMessage } from 'element-plus'
 import { footerStore } from '@/store/footer'
 import { storeToRefs } from 'pinia'
 import { formatMillisecond } from '@/utils/formatMillisecond'
-import state from './hook/useState'
+// import state from './hook/useState'
 const router = useRouter()
 const store = footerStore()
-const { song } = storeToRefs(store)
+const { song, state } = storeToRefs(store)
 let drawer = ref(false)
 let playActive = ref(false)
 let platState = ref(-1) //-1表示列表循环 0表示随机播放 1表示单曲循环
@@ -134,15 +134,17 @@ const timeupdate = (e) => {
 //下一首
 const nextPlay = () => {
   if (platState.value === -1) {
-    state.currentIndex =
-      state.currentIndex === state.playlist.length - 1 ? 0 : state.currentIndex + 1
+    store.state.currentIndex =
+      store.state.currentIndex === store.state.playlist.length - 1
+        ? 0
+        : store.state.currentIndex + 1
     // 这里要延迟播放，因为要先让它加载一下
 
     nextTick(() => {
       audioPlay()
     })
   } else if (platState.value === 0) {
-    state.currentIndex = Math.floor(Math.random() * state.playlist.length)
+    store.state.currentIndex = Math.floor(Math.random() * store.state.playlist.length)
 
     nextTick(() => {
       audioPlay()
@@ -155,7 +157,8 @@ const nextPlay = () => {
 }
 //上一首
 const backPlay = () => {
-  state.currentIndex = state.currentIndex === 0 ? state.playlist.length - 1 : state.currentIndex - 1
+  store.state.currentIndex =
+    store.state.currentIndex === 0 ? store.state.playlist.length - 1 : store.state.currentIndex - 1
   playActive.value = true
   nextTick(() => {
     audioPlay()
@@ -207,16 +210,16 @@ const toPlaylistQueue = () => {
 }
 //返回需要播放的歌曲详情
 const currentSong = computed(() => {
-  return state.playlist[state.currentIndex]
+  return store.state.playlist[store.state.currentIndex]
 })
 watch(song, (newValue) => {
   let flag = true //解决点击同一首歌问题
   nextTick(() => {
     audioPlay()
   })
-  state.playlist.forEach((item, index) => {
+  store.state.playlist.forEach((item, index) => {
     if (item.id === newValue.id) {
-      state.currentIndex = index
+      store.state.currentIndex = index
       flag = false
     }
   })
@@ -229,7 +232,7 @@ watch(song, (newValue) => {
       id: newValue.id,
       url: newValue.url
     }
-    state.playlist.splice(state.currentIndex, 0, obj)
+    store.state.playlist.splice(store.state.currentIndex, 0, obj)
   }
 })
 </script>
