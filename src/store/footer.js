@@ -5,11 +5,7 @@ export const footerStore = defineStore('footer', {
 	state: () => {
 		return {
 			song: {},
-			state: {
-				playlist: [
-				],
-				currentIndex: 0
-			}
+			isPlayQueue: false
 		}
 	},
 	actions: {

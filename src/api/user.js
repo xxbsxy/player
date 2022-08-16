@@ -29,3 +29,22 @@ export function UserLogout() {
 		url: '/logout',
 	})
 }
+
+//用户关注列表
+export function getUserFollows(uid) {
+	return myRequest.request({
+		url: '/user/follows',
+		params: {
+			uid
+		}
+	})
+}
+//用户粉丝列表
+export function getUserFolloweds(uid) {
+	return myRequest.request({
+		url: '/user/followeds',
+		params: {
+			uid
+		}
+	})
+}

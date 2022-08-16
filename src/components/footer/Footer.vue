@@ -14,10 +14,12 @@
         <img :src="currentSong.al.picUrl" alt="" class="pic" />
         <div class="name">
           <div class="song-name">{{ currentSong.name }}</div>
-          <span v-for="(item, index) in currentSong.ar" :key="item.id" class="al-name">
-            {{ item.name }}
-            <span v-show="index < currentSong.ar.length - 1">/&nbsp;</span>
-          </span>
+          <p class="al-name">
+            <span v-for="(item, index) in currentSong.ar" :key="item.id">
+              {{ item.name }}
+              <span v-show="index < currentSong.ar.length - 1">/&nbsp;</span>
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -87,10 +89,10 @@ import { ElMessage } from 'element-plus'
 import { footerStore } from '@/store/footer'
 import { storeToRefs } from 'pinia'
 import { formatMillisecond } from '@/utils/formatMillisecond'
-// import state from './hook/useState'
+import state from './hook/useState'
 const router = useRouter()
 const store = footerStore()
-const { song, state } = storeToRefs(store)
+const { song } = storeToRefs(store)
 let drawer = ref(false)
 let playActive = ref(false)
 let platState = ref(-1) //-1表示列表循环 0表示随机播放 1表示单曲循环
@@ -134,17 +136,15 @@ const timeupdate = (e) => {
 //下一首
 const nextPlay = () => {
   if (platState.value === -1) {
-    store.state.currentIndex =
-      store.state.currentIndex === store.state.playlist.length - 1
-        ? 0
-        : store.state.currentIndex + 1
+    state.currentIndex =
+      state.currentIndex === state.playlist.length - 1 ? 0 : state.currentIndex + 1
     // 这里要延迟播放，因为要先让它加载一下
 
     nextTick(() => {
       audioPlay()
     })
   } else if (platState.value === 0) {
-    store.state.currentIndex = Math.floor(Math.random() * store.state.playlist.length)
+    state.currentIndex = Math.floor(Math.random() * state.playlist.length)
 
     nextTick(() => {
       audioPlay()
@@ -157,8 +157,7 @@ const nextPlay = () => {
 }
 //上一首
 const backPlay = () => {
-  store.state.currentIndex =
-    store.state.currentIndex === 0 ? store.state.playlist.length - 1 : store.state.currentIndex - 1
+  state.currentIndex = state.currentIndex === 0 ? state.playlist.length - 1 : state.currentIndex - 1
   playActive.value = true
   nextTick(() => {
     audioPlay()
@@ -203,23 +202,22 @@ const orderPlay = () => {
   ElMessage.success('顺序播放')
   platState.value = -1
 }
+//控制播放队列
 const toPlaylistQueue = () => {
-  router.push({
-    path: '/playlistQueue'
-  })
+  store.isPlayQueue = true
 }
 //返回需要播放的歌曲详情
 const currentSong = computed(() => {
-  return store.state.playlist[store.state.currentIndex]
+  return state.playlist[state.currentIndex]
 })
 watch(song, (newValue) => {
   let flag = true //解决点击同一首歌问题
   nextTick(() => {
     audioPlay()
   })
-  store.state.playlist.forEach((item, index) => {
+  state.playlist.forEach((item, index) => {
     if (item.id === newValue.id) {
-      store.state.currentIndex = index
+      state.currentIndex = index
       flag = false
     }
   })
@@ -232,7 +230,7 @@ watch(song, (newValue) => {
       id: newValue.id,
       url: newValue.url
     }
-    store.state.playlist.splice(store.state.currentIndex, 0, obj)
+    state.playlist.splice(state.currentIndex, 0, obj)
   }
 })
 </script>
@@ -254,9 +252,22 @@ watch(song, (newValue) => {
       display: flex;
       .name {
         margin-left: 12px;
+
+        .song-name {
+          width: 180px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
         .al-name {
           position: relative;
           top: 16px;
+          margin: 0;
+          width: 180px;
+          height: 20px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
     }

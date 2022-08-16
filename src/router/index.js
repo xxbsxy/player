@@ -44,11 +44,6 @@ const routes = [
 		path: '/playlistSort',
 		component: () => import('../views/playlist-sort/PlaylistSort.vue')
 	},
-
-	{
-		path: '/playlistQueue',
-		component: () => import('../views/play-queue/PlayQueue.vue')
-	},
 	{
 		path: '/rank',
 		component: () => import('../views/rank/Rank.vue')
@@ -72,6 +67,14 @@ const routes = [
 	{
 		path: '/userDetail',
 		component: () => import('../views/user-detail/UserDetail.vue')
+	},
+	{
+		path: '/userFolloweds',
+		component: () => import('../views/user-detail/UserFolloweds.vue')
+	},
+	{
+		path: '/userFollows',
+		component: () => import('../views/user-detail/UserFollows.vue')
 	}
 
 ]

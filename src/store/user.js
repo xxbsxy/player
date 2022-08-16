@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { getUserMessages, getUserSongList, getUserDetail, UserLogout } from '@/api/user';
+import { getUserMessages, getUserSongList, getUserDetail, UserLogout, getUserFolloweds, getUserFollows } from '@/api/user';
 import { ElMessage } from 'element-plus'
 export const userStore = defineStore('user', {
 	persist: true,
@@ -8,7 +8,9 @@ export const userStore = defineStore('user', {
 			profile: null,
 			userPlaylist: [],
 			otherProfile: null,
-			otherPlaylist: []
+			otherPlaylist: [],
+			userFolloweds: [],
+			userFollows: []
 		}
 	},
 	actions: {
@@ -42,7 +44,14 @@ export const userStore = defineStore('user', {
 			else {
 				ElMessage.error('退出登录失败')
 			}
+		},
+		async getUserFolloweds(id) {
+			const res = await getUserFolloweds(id)
+			this.userFolloweds = res.followeds
+		},
+		async getUserFollows(id) {
+			const res = await getUserFollows(id)
+			this.userFollows = res.follow
 		}
-
 	}
 });

@@ -22,7 +22,9 @@
       ></el-avatar>
     </div>
     <div class="right-area">
-      <div class="nickname">{{ item.user.nickname }}</div>
+      <div class="nickname" @click="toUserDetail(props.comments.user.userId)">
+        {{ item.user.nickname }}
+      </div>
       <div class="time">{{ item.timeStr }}</div>
       <div class="content">{{ item.content }}</div>
       <div class="like">
@@ -58,7 +60,7 @@ const publishComment = () => {
     content.value = ''
   }
 }
-const toAlbumDetail = (id) => {
+const toUserDetail = (id) => {
   router.push({
     path: '/userDetail',
     query: {
@@ -90,6 +92,10 @@ const toAlbumDetail = (id) => {
     color: rgb(79, 79, 79);
     .nickname {
       margin-top: 3px;
+      cursor: pointer;
+      &:hover {
+        color: #000;
+      }
     }
     .time {
       margin-top: 5px;

@@ -23,8 +23,9 @@
           </el-container>
         </el-container>
       </el-container>
-      <!-- <div class="draewer"></div> -->
     </div>
+    <div class="draewer" ref="draewer" v-show="isPlaylistQueue"></div>
+    <play-queue />
   </div>
 </template>
 
@@ -32,11 +33,14 @@
 export default { name: 'App' }
 </script>
 <script setup>
+import PlayQueue from './components/play-queue/PlayQueue.vue'
 import Header from './components/header/Header.vue'
 import Aside from './components/aside/Aside.vue'
 import Footer from './components/footer/Footer.vue'
-import { ref } from 'vue'
-const drawer = ref(true)
+import { footerStore } from '@/store/footer'
+import { storeToRefs } from 'pinia'
+const store = footerStore()
+const { isPlaylistQueue } = storeToRefs(store)
 </script>
 <style scoped lang="less">
 @import './assets/css/base.css';
@@ -55,16 +59,6 @@ const drawer = ref(true)
     height: 820px;
     background-color: #fff;
     border-radius: 30px;
-  }
-  .draewer {
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 100;
-    width: 300px;
-    height: 100%;
-    background-color: pink;
-    border-radius: 0 30px 30px 0;
   }
 }
 </style>

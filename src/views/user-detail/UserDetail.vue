@@ -11,11 +11,15 @@
           <p>动态</p>
         </div>
         <div class="follows">
-          <h3>{{ otherProfile.follows }}</h3>
+          <h3 @click="toUserFollws(otherProfile.userId, otherProfile.nickname)">
+            {{ otherProfile.follows }}
+          </h3>
           <p>关注</p>
         </div>
         <div class="followeds">
-          <h3>{{ otherProfile.followeds }}</h3>
+          <h3 @click="toUserFollweds(otherProfile.userId, otherProfile.nickname)">
+            {{ otherProfile.followeds }}
+          </h3>
           <p>粉丝</p>
         </div>
       </div>
@@ -36,10 +40,29 @@ import Playlist from '@/components/playlist/Playlist.vue'
 import { watch } from 'vue'
 import { userStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
+const router = useRouter()
 const store = userStore()
 const { otherProfile, otherPlaylist } = storeToRefs(store)
+const toUserFollweds = (id, name) => {
+  router.push({
+    path: '/userFolloweds',
+    query: {
+      id,
+      name
+    }
+  })
+}
+const toUserFollws = (id, name) => {
+  router.push({
+    path: '/userFollows',
+    query: {
+      id,
+      name
+    }
+  })
+}
 watch(
   () => route.query.id,
   (newvalue) => {
@@ -70,6 +93,9 @@ watch(
       p,
       h3 {
         margin: 0;
+      }
+      h3 {
+        cursor: pointer;
       }
       .follows,
       .followeds,

@@ -2,7 +2,7 @@
   <div class="header">
     <!-- logo -->
     <div>
-      <img src="@/assets/img/header/vae.jpg" alt class="img" />
+      <img src="@/assets/img/header/vae.jpg" alt class="vae" />
     </div>
     <!-- 前进后退 -->
     <div class="icons">
@@ -124,13 +124,14 @@ const go = () => {
   display: flex;
   align-items: center;
   height: 100%;
-  .img {
-    width: 30px;
-    height: 30px;
+  .vae {
+    margin-left: 10px;
+    width: 35px;
+    height: 35px;
     border-radius: 5px;
   }
   .icons {
-    margin-left: 160px;
+    margin-left: 150px;
     .left,
     .right {
       cursor: pointer;

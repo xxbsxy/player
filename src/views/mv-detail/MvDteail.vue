@@ -50,10 +50,12 @@ const toMvDetail = (id) => {
 watch(
   () => route.query.id,
   (newvalue) => {
-    store.getMvUrl(newvalue)
-    store.getMvDetail(newvalue)
-    store.getMvComment(newvalue)
-    store.getMvSimilar(newvalue)
+    if (newvalue) {
+      store.getMvUrl(newvalue)
+      store.getMvDetail(newvalue)
+      store.getMvComment(newvalue)
+      store.getMvSimilar(newvalue)
+    }
   },
   { immediate: true, deep: true }
 )

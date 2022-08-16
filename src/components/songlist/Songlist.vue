@@ -40,10 +40,10 @@ export default { name: 'PlayList' }
 <script setup>
 import { footerStore } from '@/store/footer'
 import { storeToRefs } from 'pinia'
-const store = footerStore()
 import { formatMillisecond } from '@/utils/formatMillisecond'
 import { useRouter } from 'vue-router'
 const router = useRouter()
+const store = footerStore()
 const props = defineProps({
   songs: {
     type: Array,
