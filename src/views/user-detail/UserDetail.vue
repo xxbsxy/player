@@ -18,7 +18,7 @@
         </div>
         <div class="followeds">
           <h3 @click="toUserFollweds(otherProfile.userId, otherProfile.nickname)">
-            {{ otherProfile.followeds }}
+            {{ formatPlayCount(otherProfile.followeds) }}
           </h3>
           <p>粉丝</p>
         </div>
@@ -41,6 +41,8 @@ import { watch } from 'vue'
 import { userStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
+import { formatPlayCount } from '@/utils/formatPlayCount.js'
+
 const route = useRoute()
 const router = useRouter()
 const store = userStore()
@@ -66,7 +68,7 @@ const toUserFollws = (id, name) => {
 watch(
   () => route.query.id,
   (newvalue) => {
-    if (newvalue) {
+    if (newvalue && route.path === '/userDetail') {
       store.getUserDetail(newvalue)
       store.getUserSongList(newvalue)
     }

@@ -37,4 +37,4 @@ export const singerStore = defineStore('singer', {
 		// }
 	}
 
-});
+})

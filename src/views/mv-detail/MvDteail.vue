@@ -50,7 +50,7 @@ const toMvDetail = (id) => {
 watch(
   () => route.query.id,
   (newvalue) => {
-    if (newvalue) {
+    if (newvalue && route.path === '/mvDetail') {
       store.getMvUrl(newvalue)
       store.getMvDetail(newvalue)
       store.getMvComment(newvalue)

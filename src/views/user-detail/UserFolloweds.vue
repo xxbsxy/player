@@ -9,7 +9,7 @@
             <div class="nickname" @click="toUserDetail(item.userId)">{{ item.nickname }}</div>
             <p class="signature">{{ item.signature }}</p>
             <span class="playlist-count"> 歌单: {{ item.playlistCount }}</span>
-            <span class="followeds"> 粉丝:{{ item.followeds }}</span>
+            <span class="followeds"> 粉丝:{{ formatPlayCount(item.followeds) }}</span>
           </div>
         </div>
       </el-col>
@@ -25,6 +25,8 @@ import { onMounted } from 'vue'
 import { userStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
+import { formatPlayCount } from '@/utils/formatPlayCount.js'
+
 const route = useRoute()
 const router = useRouter()
 const store = userStore()

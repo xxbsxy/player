@@ -17,7 +17,7 @@
       <el-avatar
         :src="item.user.avatarUrl"
         :size="50"
-        @click="toAlbumDetail(item.user.userId)"
+        @click="toUserDetail(item.user.userId)"
         class="avatar"
       ></el-avatar>
     </div>

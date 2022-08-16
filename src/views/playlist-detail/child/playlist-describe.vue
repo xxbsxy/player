@@ -14,7 +14,10 @@
       </div>
       <div class="tabs">
         <span>标签:</span>
-        <span v-for="item in playlistDetail.tags" :key="item" class="tabs-item">#{{ item }}</span>
+        <span v-if="playlistDetail.tags.length === 0"> 无</span>
+        <span v-if="playlistDetail.tags.length != 0">
+          <span v-for="item in playlistDetail.tags" :key="item" class="tabs-item">#{{ item }}</span>
+        </span>
       </div>
       <div class="song">
         <span>歌曲 :&nbsp;</span>
@@ -24,7 +27,11 @@
       </div>
       <div class="description">
         <p>
-          简介 : <span class="des">{{ playlistDetail.description }}</span>
+          简介 :
+          <span class="des" v-if="playlistDetail.description">
+            {{ playlistDetail.description }}
+          </span>
+          <span v-if="!playlistDetail.description"> 无</span>
         </p>
       </div>
     </div>
@@ -47,7 +54,7 @@ const { playlistDetail } = storeToRefs(store)
 watch(
   () => route.query.id,
   (newvalue) => {
-    if (newvalue) {
+    if (newvalue && route.path === '/playlistDetail') {
       store.getPlaylistDetail(newvalue)
     }
   },

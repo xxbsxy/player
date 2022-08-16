@@ -2,14 +2,14 @@
   <div class="user-follows">
     <h2>{{ route.query.name }}的关注</h2>
     <el-row :gutter="20">
-      <el-col :span="8" v-for="item in userFolloweds" :key="item.id">
+      <el-col :span="8" v-for="item in userFollows" :key="item.id">
         <div class="item">
           <img :src="item.avatarUrl" alt="" @click="toUserDetail(item.userId)" />
           <div class="right-area">
             <div class="nickname" @click="toUserDetail(item.userId)">{{ item.nickname }}</div>
             <p class="signature">{{ item.signature }}</p>
             <span class="playlist-count"> 歌单: {{ item.playlistCount }}</span>
-            <span class="followeds"> 粉丝:{{ item.followeds }}</span>
+            <span class="followeds"> 粉丝: {{ formatPlayCount(item.followeds) }}</span>
           </div>
         </div>
       </el-col>
@@ -25,10 +25,11 @@ import { onMounted } from 'vue'
 import { userStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
+import { formatPlayCount } from '@/utils/formatPlayCount.js'
 const route = useRoute()
 const router = useRouter()
 const store = userStore()
-const { userFolloweds } = storeToRefs(store)
+const { userFollows } = storeToRefs(store)
 const toUserDetail = (id) => {
   router.push({
     path: '/userDetail',
