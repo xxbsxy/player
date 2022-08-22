@@ -59,6 +59,7 @@ const toSingerDetail = (id) => {
     }
   })
 }
+//点击去专辑详情
 const toAlbumDetail = (id) => {
   router.push({
     path: '/albumDetail',

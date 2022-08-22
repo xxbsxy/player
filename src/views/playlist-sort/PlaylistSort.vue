@@ -12,33 +12,21 @@
     </div>
   </div>
   <Playlist :playlists="playlists" />
-  <div class="buttom">
-    <el-pagination
-      background
-      layout="prev, pager, next"
-      :total="500"
-      class="pagination"
-      v-model:currentPage="pageNum"
-      v-model:page-size="pageSize"
-      @current-change="handleCurrentChange"
-    />
-  </div>
+  <Pagination :pageNum="1" :pageSize="50" :total="500" @changePageSize="changePageSize" />
 </template>
 
 <script>
 export default { name: 'PlaylistSort' }
 </script>
 <script setup>
-import { reactive, ref, onMounted } from 'vue'
+import Pagination from '@/components/pagination/Pagination'
+import { reactive, ref, onMounted, provide } from 'vue'
 import { playlistStore } from '@/store/playlist'
 import { storeToRefs } from 'pinia'
 import Playlist from '@/components/playlist/Playlist.vue'
 const store = playlistStore()
 const { playlists } = storeToRefs(store)
 const activeCat = ref(0)
-let pageNum = ref(1)
-let pageSize = ref(50)
-
 const titleList = reactive([
   { cat: '全部' },
   { cat: '古风' },
@@ -56,9 +44,8 @@ const changeCat = (cat, index) => {
   activeCat.value = index
   store.getPlaylistSort(cat)
 }
-const handleCurrentChange = (newPage) => {
-  pageNum.value = newPage
-  store.getPlaylistSort({ cat: '全部', offset: newPage * pageSize.value })
+const changePageSize = (newPage) => {
+  store.getPlaylistSort({ cat: '全部', offset: newPage * 30 })
 }
 onMounted(() => {
   store.getPlaylistSort({ cat: '全部', offset: 1 })

@@ -1,4 +1,5 @@
 <template>
+  <!-- 用户粉丝列表 -->
   <div class="user-followeds">
     <h2>{{ route.query.name }}的粉丝</h2>
     <el-row :gutter="20">
@@ -31,6 +32,7 @@ const route = useRoute()
 const router = useRouter()
 const store = userStore()
 const { userFolloweds } = storeToRefs(store)
+// 点击去用户详情
 const toUserDetail = (id) => {
   router.push({
     path: '/userDetail',

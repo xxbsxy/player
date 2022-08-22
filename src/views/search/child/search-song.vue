@@ -1,16 +1,6 @@
 <template>
   <Songlist :songs="songs" />
-  <div class="buttom">
-    <el-pagination
-      background
-      layout="prev, pager, next"
-      :total="300"
-      class="pagination"
-      v-model:currentPage="pageNum"
-      v-model:page-size="pageSize"
-      @current-change="handleCurrentChange"
-    />
-  </div>
+  <Pagination :pageNum="1" :pageSize="30" :total="300" @changePageSize="changePageSize" />
 </template>
 
 <script>
@@ -18,29 +8,33 @@ export default { name: 'search-song' }
 </script>
 <script setup>
 import Songlist from '@/components/songlist/Songlist.vue'
+import Pagination from '@/components/pagination/Pagination'
 import { searchStore } from '@/store/search'
 import { storeToRefs } from 'pinia'
-import { ref, watch } from 'vue'
+import { watch, ref } from 'vue'
 import { useRoute } from 'vue-router'
-let pageNum = ref(1)
-let pageSize = ref(30)
+let activePageSize = ref(0) //保持再次搜索页码不变
 const store = searchStore()
 const route = useRoute()
 const { songs } = storeToRefs(store)
-const handleCurrentChange = (newPage) => {
-  console.log(newPage)
-  pageNum.value = newPage
+//页码改变回调
+const changePageSize = (newPage) => {
+  activePageSize.value = (newPage - 1) * 30
   store.getSearchResult({
     keywords: route.query.keyword,
     type: 1,
-    offset: (newPage - 1) * pageSize.value
+    offset: (newPage - 1) * 30
   })
 }
 watch(
   () => route.query.keyword,
   (newvalue) => {
     if (newvalue) {
-      store.getSearchResult({ keywords: route.query.keyword, type: 1, offset: 0 })
+      store.getSearchResult({
+        keywords: route.query.keyword,
+        type: 1,
+        offset: activePageSize.value
+      })
     }
   },
   { immediate: true, deep: true }

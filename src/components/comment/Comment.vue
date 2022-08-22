@@ -43,7 +43,7 @@ import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
-let content = ref('')
+let content = ref('') //评论内容
 const props = defineProps({
   comments: {
     type: Array,
@@ -52,6 +52,7 @@ const props = defineProps({
     }
   }
 })
+//点击发表评论
 const publishComment = () => {
   if (content.value.length === 0) {
     ElMessage.error('内容不能为空哦')

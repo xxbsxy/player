@@ -16,7 +16,7 @@ import { onMounted } from 'vue'
 import { bannerStore } from '@/store/banner'
 import { storeToRefs } from 'pinia'
 const store = bannerStore()
-const { banners } = storeToRefs(store)
+const { banners } = storeToRefs(store) //轮播图
 onMounted(() => {
   store.getBanners()
 })

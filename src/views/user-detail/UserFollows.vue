@@ -1,4 +1,5 @@
 <template>
+  <!-- 用户关注列表 -->
   <div class="user-follows">
     <h2>{{ route.query.name }}的关注</h2>
     <el-row :gutter="20">

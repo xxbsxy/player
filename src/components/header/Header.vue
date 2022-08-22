@@ -91,8 +91,8 @@ const login = () => {
   store.getUserMessages(accountForm)
   dialogVisible.value = false
 }
+//退出登录
 const Logout = () => {
-  console.log(1)
   store.UserLogout()
 }
 //按下回车进行搜素
@@ -113,6 +113,7 @@ const toSearch = () => {
     })
   }
 }
+//点击去用户详情
 const toUserDetail = (id) => {
   router.push({
     path: '/userDetail',

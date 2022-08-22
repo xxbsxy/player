@@ -1,5 +1,5 @@
 import myRequest from "./api"
-
+//获得歌单详情
 export function getPlaylistDetail(id) {
 	return myRequest.request({
 		url: '/playlist/detail',
@@ -8,6 +8,7 @@ export function getPlaylistDetail(id) {
 		}
 	})
 }
+//获得歌曲详情
 export function getSongDetail(ids) {
 	return myRequest.request({
 		url: '/song/detail',
@@ -16,7 +17,7 @@ export function getSongDetail(ids) {
 		}
 	})
 }
-
+//获得歌单分类
 export function getPlaylistSort(cat, offset) {
 	return myRequest.request({
 		url: '/top/playlist',

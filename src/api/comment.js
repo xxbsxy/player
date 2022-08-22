@@ -1,5 +1,5 @@
 import myRequest from "./api"
-// 获得用户信息
+// 获得评论信息
 export function getComment(data) {
 	return myRequest.request({
 		url: '/comment/new',

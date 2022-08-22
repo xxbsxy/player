@@ -89,18 +89,17 @@ import { ElMessage } from 'element-plus'
 import { footerStore } from '@/store/footer'
 import { storeToRefs } from 'pinia'
 import { formatMillisecond } from '@/utils/formatMillisecond'
-import state from './hook/useState'
+import state from './hook/useState' //播放列表
 const router = useRouter()
 const store = footerStore()
-const { song } = storeToRefs(store)
-let drawer = ref(false)
-let playActive = ref(false)
+const { song } = storeToRefs(store) //获得音乐
+let playActive = ref(false) //控制播放图片
 let platState = ref(-1) //-1表示列表循环 0表示随机播放 1表示单曲循环
 let songSlider = ref() //音乐播放进度条
-let volume = ref(100)
+let volume = ref(100) //音量
 const endTime = ref('00 : 00') //播放时长
 const currentTime = ref('00 : 00') //音乐实时播放时间
-const audio = ref()
+const audio = ref() //获得音频控件
 
 //获得歌曲播放时长
 const getDuration = () => {

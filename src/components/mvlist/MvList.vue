@@ -27,6 +27,7 @@ const prop = defineProps({
     }
   }
 })
+//点击去MV详情
 const toMvDetail = (id) => {
   router.push({
     path: '/mvDetail',

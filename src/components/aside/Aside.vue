@@ -1,10 +1,12 @@
 <template>
   <div class="aside">
+    <!-- 导航栏 -->
     <h3 class="title">发现</h3>
     <div v-for="item in title" :key="item.name" class="list-item" @click="toModule(item.url)">
       <img :src="item.imgUrl" alt class="img" />
       {{ item.name }}
     </div>
+    <!-- 用户创建的歌单 -->
     <h5>创建的歌单 <span v-if="userPlaylist.length === 0">(登陆查看)</span></h5>
     <div
       v-for="item in userPlaylist"
@@ -27,7 +29,7 @@ import { useRouter } from 'vue-router'
 import { userStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
 const store = userStore()
-const { userPlaylist } = storeToRefs(store)
+const { userPlaylist } = storeToRefs(store) //用户歌单
 const router = useRouter()
 const title = reactive([
   {
@@ -52,11 +54,13 @@ const title = reactive([
     imgUrl: require('@/assets/img/aside/rank.svg')
   }
 ])
+//点击去相关模块
 const toModule = (url) => {
   router.push({
     path: url
   })
 }
+//点击去用户创建的歌单详情
 const toPlayListDetail = (id) => {
   router.push({
     path: '/playlistDetail',

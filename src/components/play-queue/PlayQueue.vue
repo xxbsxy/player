@@ -1,7 +1,6 @@
 <template>
   <div class="queue" v-show="isPlayQueue">
     <h3>播放列表</h3>
-    <!-- <span @click="clearAllSongs">清空全部</span> -->
     <div class="songs">
       <!-- 播放列表 -->
       <el-table
@@ -55,7 +54,8 @@ import state from '../footer/hook/useState'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const store = footerStore()
-const { isPlayQueue } = storeToRefs(store)
+const { isPlayQueue } = storeToRefs(store) //是否显示播放列表
+//关闭播放列表
 const closePlayQueue = () => {
   store.isPlayQueue = false
 }
@@ -73,10 +73,6 @@ const toSingerDetail = (id) => {
 const toPlayMusic = (row) => {
   store.getSongUrl(row.id)
 }
-// const clearAllSongs = () => {
-//   state.playlist = []
-//   state.currentIndex = 0
-// }
 </script>
 <style scoped lang="less">
 .queue {

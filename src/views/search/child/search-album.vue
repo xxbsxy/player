@@ -26,20 +26,23 @@
       </template>
     </el-table-column>
   </el-table>
+  <Pagination :pageNum="1" :pageSize="30" :total="150" @changePageSize="changePageSize" />
 </template>
 
 <script>
 export default { name: 'search-album' }
 </script>
 <script setup>
-import { watch } from 'vue'
+import Pagination from '@/components/pagination/Pagination'
+import { watch, ref } from 'vue'
 import { searchStore } from '@/store/search'
 import { storeToRefs } from 'pinia'
 import { formatTimeStamp } from '@/utils/formatTimeStamp'
 import { useRouter, useRoute } from 'vue-router'
+
+let activePageSize = ref(0) //保持再次搜索页码不变
 const router = useRouter()
 const route = useRoute()
-
 const store = searchStore()
 const { albums } = storeToRefs(store)
 const toAlbumDetail = (row) => {
@@ -50,11 +53,24 @@ const toAlbumDetail = (row) => {
     }
   })
 }
+//页码改变回调
+const changePageSize = (newPage) => {
+  activePageSize.value = (newPage - 1) * 30
+  store.getSearchResult({
+    keywords: route.query.keyword,
+    type: 10,
+    offset: (newPage - 1) * 30
+  })
+}
 watch(
   () => route.query.keyword,
   (newvalue) => {
     if (newvalue) {
-      store.getSearchResult({ keywords: route.query.keyword, type: 10, offset: 0 })
+      store.getSearchResult({
+        keywords: route.query.keyword,
+        type: 10,
+        offset: activePageSize.value
+      })
     }
   },
   { immediate: true, deep: true }

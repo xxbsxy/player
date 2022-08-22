@@ -38,6 +38,7 @@ declare module '@vue/runtime-core' {
     Footer: typeof import('./src/components/footer/Footer.vue')['default']
     Header: typeof import('./src/components/header/Header.vue')['default']
     MvList: typeof import('./src/components/mvlist/MvList.vue')['default']
+    Pagination: typeof import('./src/components/pagination/Pagination.vue')['default']
     Playlist: typeof import('./src/components/playlist/Playlist.vue')['default']
     PlayQueue: typeof import('./src/components/play-queue/PlayQueue.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

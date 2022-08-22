@@ -47,6 +47,7 @@ const route = useRoute()
 const router = useRouter()
 const store = userStore()
 const { otherProfile, otherPlaylist } = storeToRefs(store)
+//点击去用户的粉丝列表
 const toUserFollweds = (id, name) => {
   router.push({
     path: '/userFolloweds',
@@ -56,6 +57,7 @@ const toUserFollweds = (id, name) => {
     }
   })
 }
+//点击去用户的关注列表
 const toUserFollws = (id, name) => {
   router.push({
     path: '/userFollows',

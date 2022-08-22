@@ -1,5 +1,5 @@
 import myRequest from "./api"
-// 获得用户信息
+// 登录并获得用户信息
 export function getUserMessages(account) {
 	return myRequest.request({
 		url: '/login/cellphone',
@@ -7,6 +7,7 @@ export function getUserMessages(account) {
 		data: account
 	})
 }
+// 获得用户歌单
 export function getUserSongList(uid) {
 	return myRequest.request({
 		url: '/user/playlist',
@@ -15,7 +16,7 @@ export function getUserSongList(uid) {
 		}
 	})
 }
-
+// 获得用户详情
 export function getUserDetail(uid) {
 	return myRequest.request({
 		url: '/user/detail',
@@ -24,12 +25,12 @@ export function getUserDetail(uid) {
 		}
 	})
 }
+//退出登录
 export function UserLogout() {
 	return myRequest.request({
 		url: '/logout',
 	})
 }
-
 //用户关注列表
 export function getUserFollows(uid) {
 	return myRequest.request({

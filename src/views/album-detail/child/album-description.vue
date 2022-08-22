@@ -22,7 +22,7 @@ import { useRoute } from 'vue-router'
 import { formatTimeStamp } from '@/utils/formatTimeStamp'
 const route = useRoute()
 const store = albumStore()
-const { albumDetail } = storeToRefs(store)
+const { albumDetail } = storeToRefs(store) //专辑详情
 onMounted(() => {
   store.getAlbumDetail(route.query.id)
   store.getAlbumComment(route.query.id)

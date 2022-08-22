@@ -10,6 +10,6 @@ import Songlist from '@/components/songlist/Songlist'
 import { albumStore } from '@/store/album'
 import { storeToRefs } from 'pinia'
 const store = albumStore()
-const { albumSongs } = storeToRefs(store)
+const { albumSongs } = storeToRefs(store) //专辑歌曲
 </script>
 <style scoped lang="less"></style>

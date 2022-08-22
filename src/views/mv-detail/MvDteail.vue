@@ -1,5 +1,6 @@
 <template>
   <div class="mv-detail">
+    <!-- 视频详情 -->
     <div class="left-area">
       <h3>视频详情</h3>
       <video :src="mvUrl" controls></video>
@@ -10,8 +11,10 @@
         发布时间: <span class="publish-time">{{ mvDetail.publishTime }}</span> 播放次数:
         {{ formatPlayCount(mvDetail.playCount) }}
       </p>
+      <!-- 视频评论 -->
       <Comment :comments="mvComments" />
     </div>
+    <!-- 相关推荐 -->
     <div class="right-area">
       <h3>相关推荐</h3>
       <div v-for="item in mvSimilar" :key="item.id" class="item">

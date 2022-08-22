@@ -12,6 +12,7 @@
         <span class="nickname">{{ playlistDetail.creator.nickname }}</span>
         <span class="update-time">{{ formatTimeStamp(playlistDetail.updateTime) }} 创建</span>
       </div>
+      <!-- 歌曲标签 -->
       <div class="tabs">
         <span>标签:</span>
         <span v-if="playlistDetail.tags.length === 0"> 无</span>
@@ -19,12 +20,14 @@
           <span v-for="item in playlistDetail.tags" :key="item" class="tabs-item">#{{ item }}</span>
         </span>
       </div>
+      <!-- 歌曲播放次数等 -->
       <div class="song">
         <span>歌曲 :&nbsp;</span>
         <span>{{ playlistDetail.trackCount }}首</span>
         <span class="play">播放 : &nbsp;</span>
         <span class="playCount">{{ formatPlayCount(playlistDetail.playCount) }}</span>
       </div>
+      <!-- 歌曲简介 -->
       <div class="description">
         <p>
           简介 :

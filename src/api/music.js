@@ -1,5 +1,5 @@
 import myRequest from "./api"
-
+//获得轮播图
 export function getBanners() {
 	return myRequest.request({
 		url: '/banner'

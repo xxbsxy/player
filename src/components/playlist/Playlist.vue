@@ -40,6 +40,7 @@ const props = defineProps({
     }
   }
 })
+//点击去歌单详情
 const toPlaylistDetail = (id) => {
   router.push({
     path: '/playlistDetail',
