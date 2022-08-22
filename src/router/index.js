@@ -20,18 +20,25 @@ const routes = [
 			{
 				path: 'song',
 				component: () => import('../views/search/child/search-song'),
+				meta: { activeName: 1 }
 			},
 			{
 				path: 'mv',
 				component: () => import('../views/search/child/search-mv.vue'),
+				meta: { activeName: 1004 }
+
 			},
 			{
 				path: 'playlist',
-				component: () => import('../views/search/child/search-playlist.vue')
+				component: () => import('../views/search/child/search-playlist.vue'),
+				meta: { activeName: 1000 }
+
 			},
 			{
 				path: 'album',
-				component: () => import('../views/search/child/search-album.vue')
+				component: () => import('../views/search/child/search-album.vue'),
+				meta: { activeName: 10 }
+
 			}
 		]
 	},

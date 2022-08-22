@@ -22,7 +22,7 @@ import { storeToRefs } from 'pinia'
 const route = useRoute()
 const store = searchStore()
 const router = useRouter()
-let activeName = ref(1) //活跃tab的Name
+let activeName = route.meta.activeName //活跃tab的Name
 const titleList = reactive([
   { label: '热门歌曲', type: 1, url: '/search/song' },
   { label: '歌单', type: 1000, url: '/search/playlist' },

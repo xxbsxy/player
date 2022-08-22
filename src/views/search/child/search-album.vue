@@ -32,11 +32,14 @@
 export default { name: 'search-album' }
 </script>
 <script setup>
+import { watch } from 'vue'
 import { searchStore } from '@/store/search'
 import { storeToRefs } from 'pinia'
 import { formatTimeStamp } from '@/utils/formatTimeStamp'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
+const route = useRoute()
+
 const store = searchStore()
 const { albums } = storeToRefs(store)
 const toAlbumDetail = (row) => {
@@ -47,6 +50,15 @@ const toAlbumDetail = (row) => {
     }
   })
 }
+watch(
+  () => route.query.keyword,
+  (newvalue) => {
+    if (newvalue) {
+      store.getSearchResult({ keywords: route.query.keyword, type: 10, offset: 0 })
+    }
+  },
+  { immediate: true, deep: true }
+)
 </script>
 <style scoped lang="less">
 .pic {

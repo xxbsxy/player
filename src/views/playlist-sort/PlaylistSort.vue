@@ -58,7 +58,7 @@ const changeCat = (cat, index) => {
 }
 const handleCurrentChange = (newPage) => {
   pageNum.value = newPage
-  store.getPlaylistSort({ cat: '全部', offset: newPage })
+  store.getPlaylistSort({ cat: '全部', offset: newPage * pageSize.value })
 }
 onMounted(() => {
   store.getPlaylistSort({ cat: '全部', offset: 1 })

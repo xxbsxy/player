@@ -75,8 +75,9 @@ import { ElMessageBox } from 'element-plus'
 import { userStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
 import { getUserMessages } from '../../api/user'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
+const route = useRoute()
 const store = userStore()
 const { profile } = storeToRefs(store) //用户信息
 let dialogVisible = ref(false) //控制对话框的显示与隐藏
@@ -96,12 +97,21 @@ const Logout = () => {
 }
 //按下回车进行搜素
 const toSearch = () => {
-  router.push({
-    path: '/search',
-    query: {
-      keyword: keyword.value
-    }
-  })
+  if (route.path.includes('search')) {
+    router.push({
+      path: route.path,
+      query: {
+        keyword: keyword.value
+      }
+    })
+  } else {
+    router.push({
+      path: '/search',
+      query: {
+        keyword: keyword.value
+      }
+    })
+  }
 }
 const toUserDetail = (id) => {
   router.push({
