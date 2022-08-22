@@ -49,3 +49,28 @@ export function getUserFolloweds(uid) {
 		}
 	})
 }
+//获得验证码
+export function getCaptcha(phone) {
+	return myRequest.request({
+		url: '/captcha/sent',
+		params: {
+			phone
+		}
+	})
+}
+//验证码登录
+export function captchaLogin(phone, captcha) {
+	return myRequest.request({
+		url: '/captcha/verify',
+		params: {
+			phone,
+			captcha
+		}
+	})
+}
+//登录状态
+export function loginStatus() {
+	return myRequest.request({
+		url: '/login/status',
+	})
+}

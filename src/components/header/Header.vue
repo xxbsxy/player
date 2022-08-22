@@ -29,7 +29,7 @@
     </div>
     <!-- 登录 -->
     <div class="login">
-      <span v-if="!profile" @click="dialogVisible = true">登录</span>
+      <span v-if="!profile" @click="loginDialogVisible = true">登录</span>
       <div v-if="profile">
         <el-dropdown>
           <div>
@@ -46,20 +46,72 @@
       </div>
     </div>
     <!-- 登录对话框 -->
-    <el-dialog v-model="dialogVisible" title="登录" width="30%">
-      <el-form ref="ruleFormRef" label-width="60px" class="demo-ruleForm" :model="accountForm">
-        <el-form-item label="手机号">
-          <el-input v-model="accountForm.phone" />
-        </el-form-item>
-        <el-form-item label="密码">
-          <el-input v-model="accountForm.password" />
-        </el-form-item>
-      </el-form>
+    <el-dialog v-model="loginDialogVisible" width="22%">
+      <div class="login-dialog">
+        <div class="content">
+          <img src="@/assets/img/header/mobile.svg" alt="" class="img" />
+          <el-form
+            :model="accountForm"
+            :rules="accountFormRules"
+            ref="accountFormRef"
+            v-if="isLoginFromPhone"
+          >
+            <el-form-item prop="phone">
+              <el-input
+                v-model="accountForm.phone"
+                placeholder="请输入手机号"
+                :prefix-icon="Iphone"
+              ></el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input
+                v-model="accountForm.password"
+                placeholder="请输入密码"
+                type="password"
+                :prefix-icon="Lock"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+          <el-form
+            :model="captchaForm"
+            :rules="captchaFormRules"
+            ref="captchaFormRef"
+            v-if="!isLoginFromPhone"
+          >
+            <el-form-item prop="phone">
+              <el-input
+                v-model="captchaForm.phone"
+                placeholder="请输入手机号"
+                :prefix-icon="Iphone"
+              ></el-input>
+            </el-form-item>
+            <el-form-item>
+              <div class="yzm">
+                <el-input v-model="captchaForm.captcha" placeholder="请输入验证码"></el-input>
+                <el-button type="primary" class="yzm-btn" @click="getCaptcha">获取验证码</el-button>
+              </div>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
+
       <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="login">确认</el-button>
-        </span>
+        <div class="footer-dialog">
+          <el-button @click="login" class="btn">登录</el-button>
+
+          <el-link
+            type="primary"
+            @click="isLoginFromPhone = !isLoginFromPhone"
+            v-if="!isLoginFromPhone"
+            >密码登录</el-link
+          >
+          <el-link
+            type="primary"
+            @click="isLoginFromPhone = !isLoginFromPhone"
+            v-if="isLoginFromPhone"
+            >返回验证码登录</el-link
+          >
+        </div>
       </template>
     </el-dialog>
   </div>
@@ -70,26 +122,83 @@ export default { name: 'Header' }
 </script>
 <script setup>
 import { ref, reactive } from 'vue'
-import { ArrowLeftBold, ArrowRightBold } from '@element-plus/icons-vue'
-import { ElMessageBox } from 'element-plus'
+import { ArrowLeftBold, ArrowRightBold, Iphone, Lock } from '@element-plus/icons-vue'
+import { ElMessageBox, ElMessage } from 'element-plus'
 import { userStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
-import { getUserMessages } from '../../api/user'
+import { getUserMessages } from '@/api/user'
 import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
 const route = useRoute()
 const store = userStore()
-const { profile } = storeToRefs(store) //用户信息
+const { profile, loginDialogVisible } = storeToRefs(store) //用户信息
+const accountFormRef = ref()
+const captchaFormRef = ref()
 let dialogVisible = ref(false) //控制对话框的显示与隐藏
 let keyword = ref('') //搜素内容
+let isLoginFromPhone = ref(false) //登录与注册切换
 const accountForm = reactive({
-  phone: '15905876135',
-  password: '1808298593'
+  phone: '',
+  password: ''
+})
+const captchaForm = reactive({
+  phone: '',
+  captcha: ''
+})
+const accountFormRules = reactive({
+  password: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    { min: 6, max: 18, message: '密码应该在6-18位之间', trigger: 'blur' }
+  ],
+  phone: [
+    { required: true, message: '请输入手机号码', trigger: 'blur' },
+    { min: 11, max: 11, message: '请输入11位手机号码', trigger: 'blur' },
+    {
+      pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/,
+      message: '请输入正确的手机号码',
+      trigger: 'blur'
+    }
+  ]
+})
+const captchaFormRules = reactive({
+  phone: [
+    { required: true, message: '请输入手机号码', trigger: 'blur' },
+    { min: 11, max: 11, message: '请输入11位手机号码', trigger: 'blur' },
+    {
+      pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/,
+      message: '请输入正确的手机号码',
+      trigger: 'blur'
+    }
+  ]
 })
 //点击确定进行登录操作
 const login = () => {
-  store.getUserMessages(accountForm)
-  dialogVisible.value = false
+  if (isLoginFromPhone.value) {
+    accountFormRef.value.validate((isVaildate) => {
+      if (isVaildate) {
+        store.getUserMessages(accountForm)
+      }
+    })
+  } else {
+    captchaFormRef.value.validate((isVaildate) => {
+      if (isVaildate) {
+        store.captchaLogin(captchaForm)
+      }
+    })
+  }
+}
+const aaa = () => {
+  store.loginStatus()
+}
+//获取验证码
+const getCaptcha = () => {
+  captchaFormRef.value.validate((isVisible) => {
+    if (isVisible) {
+      store.getCaptcha(captchaForm.phone)
+    } else {
+      ElMessage.error('请输入正确的手机号码')
+    }
+  })
 }
 //退出登录
 const Logout = () => {
@@ -166,8 +275,45 @@ const go = () => {
     cursor: pointer;
     .nickname {
       position: relative;
+      display: inline-block;
       left: 7px;
       bottom: 12px;
+      width: 120px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+  .login-dialog {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    .content {
+      width: 203px;
+    }
+    .img {
+      margin-bottom: 20px;
+      margin-left: 30px;
+    }
+  }
+  .footer-dialog {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20px;
+    text-align: center;
+    .btn {
+      width: 205px;
+    }
+    .el-link {
+      margin-top: 15px;
+    }
+  }
+  .yzm {
+    display: flex;
+    .yzm-btn {
+      width: 80px;
+      margin-left: 10px;
     }
   }
 }
