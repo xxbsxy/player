@@ -17,11 +17,12 @@ export function getSongDetail(ids) {
 	})
 }
 
-export function getPlaylistSort(cat) {
+export function getPlaylistSort(cat, offset) {
 	return myRequest.request({
 		url: '/top/playlist',
 		params: {
-			cat
+			cat,
+			offset
 		}
 	})
 }

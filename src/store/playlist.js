@@ -25,8 +25,8 @@ export const playlistStore = defineStore('playlist', {
 			const comment = await getComment({ id, type: 2 })
 			this.comments = comment.data.comments
 		},
-		async getPlaylistSort(cat) {
-			const res = await getPlaylistSort(cat)
+		async getPlaylistSort(data) {
+			const res = await getPlaylistSort(data.cat, data.offset)
 			this.playlists = res.playlists
 		}
 	}

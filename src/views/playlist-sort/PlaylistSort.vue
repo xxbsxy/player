@@ -1,5 +1,5 @@
 <template>
-  <img src="../../assets/img/playlist/playlist.jpg" alt="" class="img" />
+  <img src="@/assets/img/playlist/playlist.jpg" alt="" class="img" />
   <div class="playlist-sort">
     <div
       v-for="(item, index) in titleList"
@@ -12,6 +12,17 @@
     </div>
   </div>
   <Playlist :playlists="playlists" />
+  <div class="buttom">
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="500"
+      class="pagination"
+      v-model:currentPage="pageNum"
+      v-model:page-size="pageSize"
+      @current-change="handleCurrentChange"
+    />
+  </div>
 </template>
 
 <script>
@@ -25,6 +36,9 @@ import Playlist from '@/components/playlist/Playlist.vue'
 const store = playlistStore()
 const { playlists } = storeToRefs(store)
 const activeCat = ref(0)
+let pageNum = ref(1)
+let pageSize = ref(50)
+
 const titleList = reactive([
   { cat: '全部' },
   { cat: '古风' },
@@ -42,8 +56,12 @@ const changeCat = (cat, index) => {
   activeCat.value = index
   store.getPlaylistSort(cat)
 }
+const handleCurrentChange = (newPage) => {
+  pageNum.value = newPage
+  store.getPlaylistSort({ cat: '全部', offset: newPage })
+}
 onMounted(() => {
-  store.getPlaylistSort('全部')
+  store.getPlaylistSort({ cat: '全部', offset: 1 })
 })
 </script>
 <style scoped lang="less">
@@ -73,6 +91,17 @@ onMounted(() => {
       background-color: rgb(64, 182, 228);
       color: #fff;
     }
+  }
+}
+.buttom {
+  position: relative;
+  margin-top: 20px;
+  height: 30px;
+  .pagination {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 </style>
