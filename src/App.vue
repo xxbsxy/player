@@ -52,7 +52,8 @@ const { isPlaylistQueue } = storeToRefs(store)
   overflow: hidden;
   width: 100%;
   height: 100%;
-  background-color: #dde2eb;
+  background-color: var(--bc);
+  transition: all 0.4s ease-in;
   .container {
     position: relative;
     width: 1500px;

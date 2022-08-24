@@ -88,7 +88,18 @@
             <el-form-item>
               <div class="yzm">
                 <el-input v-model="captchaForm.captcha" placeholder="请输入验证码"></el-input>
-                <el-button type="primary" class="yzm-btn" @click="getCaptcha">获取验证码</el-button>
+                <el-button type="primary" class="yzm-btn" @click="getCaptcha" v-if="isShowCaptcha"
+                  >获取验证码</el-button
+                >
+                <el-button
+                  type="info"
+                  class="yzm-btn"
+                  @click="getCaptcha"
+                  disabled
+                  plain
+                  v-if="!isShowCaptcha"
+                  >{{ captchaTime }}</el-button
+                >
               </div>
             </el-form-item>
           </el-form>
@@ -135,8 +146,12 @@ const { profile, loginDialogVisible } = storeToRefs(store) //用户信息
 const accountFormRef = ref()
 const captchaFormRef = ref()
 let dialogVisible = ref(false) //控制对话框的显示与隐藏
+let isShowCaptcha = ref(true) //发送验证按钮是否可以点击
+let captchaTime = ref(60) //验证码时间
 let keyword = ref('') //搜素内容
 let isLoginFromPhone = ref(false) //登录与注册切换
+const captchaRef = ref() //获取验证码按钮
+let timer = ref('') //保存定时器
 const accountForm = reactive({
   phone: '',
   password: ''
@@ -187,18 +202,28 @@ const login = () => {
     })
   }
 }
-const aaa = () => {
-  store.loginStatus()
-}
 //获取验证码
 const getCaptcha = () => {
   captchaFormRef.value.validate((isVisible) => {
     if (isVisible) {
+      isShowCaptcha.value = false
+      timer.value = setInterval(() => {
+        desTime()
+      }, 1000)
       store.getCaptcha(captchaForm.phone)
     } else {
       ElMessage.error('请输入正确的手机号码')
     }
   })
+}
+//获取验证码倒计时
+const desTime = () => {
+  captchaTime.value = captchaTime.value - 1
+  if (captchaTime.value < 0) {
+    clearInterval(timer.value)
+    isShowCaptcha.value = true
+    captchaTime.value = 60
+  }
 }
 //退出登录
 const Logout = () => {

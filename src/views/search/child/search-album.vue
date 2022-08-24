@@ -26,7 +26,12 @@
       </template>
     </el-table-column>
   </el-table>
-  <Pagination :pageNum="1" :pageSize="30" :total="150" @changePageSize="changePageSize" />
+  <Pagination
+    :pageNum="pageNum"
+    :pageSize="30"
+    :total="albumsTotal"
+    @changePageSize="changePageSize"
+  />
 </template>
 
 <script>
@@ -39,12 +44,13 @@ import { searchStore } from '@/store/search'
 import { storeToRefs } from 'pinia'
 import { formatTimeStamp } from '@/utils/formatTimeStamp'
 import { useRouter, useRoute } from 'vue-router'
+let pageNum = ref(1)
 
 let activePageSize = ref(0) //保持再次搜索页码不变
 const router = useRouter()
 const route = useRoute()
 const store = searchStore()
-const { albums } = storeToRefs(store)
+const { albums, albumsTotal } = storeToRefs(store)
 const toAlbumDetail = (row) => {
   router.push({
     path: '/albumDetail',
@@ -55,6 +61,7 @@ const toAlbumDetail = (row) => {
 }
 //页码改变回调
 const changePageSize = (newPage) => {
+  pageNum.value = newPage
   activePageSize.value = (newPage - 1) * 30
   store.getSearchResult({
     keywords: route.query.keyword,

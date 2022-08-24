@@ -10,7 +10,7 @@
         :show-header="false"
         size="small"
       >
-        <el-table-column type="index" width="30px" />
+        <el-table-column type="index" width="40px" />
         <!-- 歌曲名 -->
         <el-table-column prop="name" width="110px">
           <template #default="scope">
@@ -79,7 +79,7 @@ const toPlayMusic = (row) => {
   position: fixed;
   z-index: 3000;
   width: 350px;
-  height: 820px;
+  height: 870px;
   margin-left: 1150px;
   background-color: #ffffff;
   box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.1);
@@ -88,9 +88,11 @@ const toPlayMusic = (row) => {
     margin-left: 15px;
   }
   .songs {
-    height: 670px;
+    height: 740px;
+    overflow: scroll;
     .singer {
       cursor: pointer;
+      overflow: auto;
       &:hover {
         color: #6ca5fe;
       }
@@ -109,7 +111,7 @@ const toPlayMusic = (row) => {
     }
   }
   .buttom {
-    margin-top: 40px;
+    margin-top: 20px;
     margin-left: 260px;
     cursor: pointer;
     span {

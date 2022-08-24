@@ -1,6 +1,11 @@
 <template>
   <MvList :mvs="mvs" />
-  <Pagination :pageNum="1" :pageSize="30" :total="120" @changePageSize="changePageSize" />
+  <Pagination
+    :pageNum="pageNum"
+    :pageSize="30"
+    :total="mvsTotal"
+    @changePageSize="changePageSize"
+  />
 </template>
 
 <script>
@@ -14,11 +19,13 @@ import { searchStore } from '@/store/search'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 let activePageSize = ref(0) //保持再次搜索页码不变
+let pageNum = ref(1)
 const route = useRoute()
 const store = searchStore()
-const { mvs } = storeToRefs(store)
+const { mvs, mvsTotal } = storeToRefs(store)
 //页码改变回调
 const changePageSize = (newPage) => {
+  pageNum.value = newPage
   activePageSize.value = (newPage - 1) * 30
   store.getSearchResult({
     keywords: route.query.keyword,

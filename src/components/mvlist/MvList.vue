@@ -6,6 +6,10 @@
         <img :src="item.cover || item.imgurl16v9" alt class="img" @click="toMvDetail(item.id)" />
         <!-- 播放按钮 -->
         <div class="play-icon"></div>
+        <div class="play-count">
+          <img src="../../assets/img/music/mvPlay.svg" alt="" />
+          <span class="count">{{ formatPlayCount(item.playCount) }}</span>
+        </div>
       </div>
       <!-- mv名称 -->
       <p>{{ item.name }}</p>
@@ -18,6 +22,7 @@ export default { name: 'MvList' }
 </script>
 <script setup>
 import { useRouter } from 'vue-router'
+import { formatPlayCount } from '@/utils/formatPlayCount.js'
 const router = useRouter()
 const prop = defineProps({
   mvs: {
@@ -65,7 +70,23 @@ const toMvDetail = (id) => {
       background: url(@/assets/img/music/play-active.svg) no-repeat center;
     }
   }
-
+  .play-count {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    padding: 0 10px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 14px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    .count {
+      position: relative;
+      bottom: 6px;
+      left: 4px;
+    }
+  }
   &:hover .img {
     transform: scale(1.02);
     border: 5px solid transparent;
@@ -78,7 +99,7 @@ const toMvDetail = (id) => {
 p {
   width: 390px;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 15px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

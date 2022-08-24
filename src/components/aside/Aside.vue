@@ -6,6 +6,12 @@
       <img :src="item.imgUrl" alt class="img" />
       {{ item.name }}
     </div>
+    <!-- 主题美化 -->
+    <h3 class="title">主题</h3>
+    <div class="list-item" @click="toModule('/beautiful')">
+      <img src="@/assets/img/aside/meihua.svg" alt="" class="img" />
+      <span class="beautiful">美化</span>
+    </div>
     <!-- 用户创建的歌单 -->
     <h5>创建的歌单 <span v-if="userPlaylist.length === 0">(登陆查看)</span></h5>
     <div
@@ -84,6 +90,10 @@ const toPlayListDetail = (id) => {
       vertical-align: -4px;
       margin-right: 10px;
       margin-left: 10px;
+    }
+    .beautiful {
+      position: relative;
+      bottom: 2px;
     }
     &:hover {
       background-color: #dddfe1;

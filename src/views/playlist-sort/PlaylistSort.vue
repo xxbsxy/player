@@ -12,7 +12,7 @@
     </div>
   </div>
   <Playlist :playlists="playlists" />
-  <Pagination :pageNum="1" :pageSize="50" :total="500" @changePageSize="changePageSize" />
+  <Pagination :pageNum="pageNum" :pageSize="50" :total="500" @changePageSize="changePageSize" />
 </template>
 
 <script>
@@ -27,6 +27,8 @@ import Playlist from '@/components/playlist/Playlist.vue'
 const store = playlistStore()
 const { playlists } = storeToRefs(store)
 const activeCat = ref(0)
+const pageNum = ref(1)
+
 const titleList = reactive([
   { cat: '全部' },
   { cat: '古风' },
@@ -42,9 +44,10 @@ const titleList = reactive([
 ])
 const changeCat = (cat, index) => {
   activeCat.value = index
-  store.getPlaylistSort(cat)
+  store.getPlaylistSort({ cat, offset: pageNum.value * 30 })
 }
 const changePageSize = (newPage) => {
+  pageNum.value = newPage
   store.getPlaylistSort({ cat: '全部', offset: newPage * 30 })
 }
 onMounted(() => {

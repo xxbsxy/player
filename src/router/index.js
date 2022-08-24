@@ -38,7 +38,6 @@ const routes = [
 				path: 'album',
 				component: () => import('../views/search/child/search-album.vue'),
 				meta: { activeName: 10 }
-
 			}
 		]
 	},
@@ -82,7 +81,11 @@ const routes = [
 	{
 		path: '/userFollows',
 		component: () => import('../views/user-detail/UserFollows.vue')
-	}
+	},
+	{
+		path: '/beautiful',
+		component: () => import('../views/beautiful/Beautiful.vue'),
+	},
 
 ]
 

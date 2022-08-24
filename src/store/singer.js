@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { getSingerDescription, getHotSong, getHotMv, getSingerSimilar, getSingerIntroduce } from '@/api/singer';
+import { getSingerDescription, getHotSong, getHotMv, getSingerIntroduce } from '@/api/singer';
 export const singerStore = defineStore('singer', {
 	persist: true,
 	state: () => {
@@ -7,7 +7,6 @@ export const singerStore = defineStore('singer', {
 			singer: null,
 			hotSongs: [],
 			mvs: [],
-			singerSimilar: [],
 			singerIntroduce: null
 		}
 	},
@@ -18,8 +17,6 @@ export const singerStore = defineStore('singer', {
 			this.singer = res.artist
 			const res1 = await getHotMv(id)
 			this.mvs = res1.mvs
-			const res2 = await getSingerSimilar(id)
-			this.singerSimilar = res2.artists
 			const res3 = await getSingerIntroduce(id)
 			this.singerIntroduce = res3
 		},
