@@ -25,7 +25,9 @@
       <!-- 专辑 -->
       <el-table-column prop="al.name" label="专辑" width="320">
         <template #default="scope">
-          <span class="albumName" @click="toAlbumDetail(scope.row.id)">{{ scope.row.name }}</span>
+          <span class="albumName" @click="toAlbumDetail(scope.row.song.album.id)">{{
+            scope.row.song.album.name
+          }}</span>
         </template>
       </el-table-column>
       <!-- 时间 -->

@@ -30,8 +30,7 @@ body, html ,#app{
 }
 ::-webkit-scrollbar-thumb {
 	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 5px rgba(163, 163, 163, 0.4);
-	background: rgba(147, 147, 147, 0.2);
+	background: rgba(147, 147, 147, 0.3);
 }
 .el-col-5 {
   max-width:20% !important;

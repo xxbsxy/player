@@ -1,6 +1,12 @@
 <template>
   <div class="queue" v-show="isPlayQueue">
-    <h3>播放列表</h3>
+    <div class="top">
+      <h3>播放列表</h3>
+      <el-link type="primary" :icon="DeleteFilled" :underline="false" @click="deleteAllSongs"
+        >清空全部</el-link
+      >
+    </div>
+
     <div class="songs">
       <!-- 播放列表 -->
       <el-table
@@ -50,11 +56,13 @@ export default { name: 'PlayQueue' }
 import { footerStore } from '@/store/footer'
 import { storeToRefs } from 'pinia'
 import { formatMillisecond } from '@/utils/formatMillisecond'
-import state from '../footer/hook/useState'
+import { DeleteFilled } from '@element-plus/icons-vue'
+
+// import state from '../footer/hook/useState'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const store = footerStore()
-const { isPlayQueue } = storeToRefs(store) //是否显示播放列表
+const { isPlayQueue, state } = storeToRefs(store) //是否显示播放列表
 //关闭播放列表
 const closePlayQueue = () => {
   store.isPlayQueue = false
@@ -68,6 +76,11 @@ const toSingerDetail = (id) => {
     }
   })
   store.isPlayQueue = false
+}
+//清空播放列表
+const deleteAllSongs = () => {
+  store.state.playlist = []
+  store.state.currentIndex = 0
 }
 //双击播放音乐
 const toPlayMusic = (row) => {
@@ -86,6 +99,14 @@ const toPlayMusic = (row) => {
   border-radius: 0 30px 30px 0;
   h3 {
     margin-left: 15px;
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    .el-link {
+      margin-top: 5px;
+      margin-right: 30px;
+    }
   }
   .songs {
     height: 740px;

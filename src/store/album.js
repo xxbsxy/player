@@ -14,6 +14,7 @@ export const albumStore = defineStore('album', {
 	actions: {
 		async getAlbumDetail(id) {
 			const res = await getAlbumDetail(id)
+			console.log(res);
 			this.albumSongs = res.songs
 			this.albumDetail = res.album
 		},

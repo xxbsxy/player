@@ -1,6 +1,6 @@
 <template>
   <audio
-    :src="currentSong.url"
+    :src="`http://music.163.com/song/media/outer/url?id=${currentSong.id}.mp3`"
     ref="audio"
     @canplay="getDuration"
     @timeupdate="timeupdate"
@@ -9,9 +9,15 @@
   <div class="footer">
     <!-- 音乐图片名称区域 -->
     <div class="left-area">
-      <img src="../../assets/img/header/vae.jpg" alt="" class="pic" v-if="!currentSong" />
+      <img src="@/assets/img/header/vae.jpg" alt="" class="pic" v-if="!currentSong" />
       <div v-if="currentSong" class="song">
-        <img :src="currentSong.al.picUrl" alt="" class="pic" />
+        <div class="img-content" @click="toSongLyric(currentSong.id)">
+          <img :src="currentSong.al.picUrl" class="pic" />
+          <div class="mask">
+            <img src="@/assets/img/footer/pullup.svg" alt="" />
+          </div>
+        </div>
+
         <div class="name">
           <div class="song-name">{{ currentSong.name }}</div>
           <p class="al-name">
@@ -89,10 +95,9 @@ import { ElMessage } from 'element-plus'
 import { footerStore } from '@/store/footer'
 import { storeToRefs } from 'pinia'
 import { formatMillisecond } from '@/utils/formatMillisecond'
-import state from './hook/useState' //播放列表
 const router = useRouter()
 const store = footerStore()
-const { song } = storeToRefs(store) //获得音乐
+const { song, state, time } = storeToRefs(store) //获得音乐
 let playActive = ref(false) //控制播放图片
 let platState = ref(-1) //-1表示列表循环 0表示随机播放 1表示单曲循环
 let songSlider = ref() //音乐播放进度条
@@ -100,7 +105,15 @@ let volume = ref(100) //音量
 const endTime = ref('00 : 00') //播放时长
 const currentTime = ref('00 : 00') //音乐实时播放时间
 const audio = ref() //获得音频控件
-
+const toSongLyric = (id) => {
+  console.log(id)
+  router.push({
+    path: '/lyric',
+    query: {
+      id
+    }
+  })
+}
 //获得歌曲播放时长
 const getDuration = () => {
   endTime.value = formatMillisecond(audio.value.duration * 1000)
@@ -124,6 +137,7 @@ const controlPlay = () => {
 const timeupdate = (e) => {
   songSlider.value = (e.target.currentTime / audio.value.duration) * 100
   currentTime.value = formatMillisecond(e.target.currentTime * 1000)
+  store.time = e.target.currentTime
   //进度条结束播放下一首
   if (e.target.currentTime === audio.value.duration) {
     playActive.value = true
@@ -135,15 +149,17 @@ const timeupdate = (e) => {
 //下一首
 const nextPlay = () => {
   if (platState.value === -1) {
-    state.currentIndex =
-      state.currentIndex === state.playlist.length - 1 ? 0 : state.currentIndex + 1
+    state.value.currentIndex =
+      state.value.currentIndex === state.value.playlist.length - 1
+        ? 0
+        : state.value.currentIndex + 1
     // 这里要延迟播放，因为要先让它加载一下
 
     nextTick(() => {
       audioPlay()
     })
   } else if (platState.value === 0) {
-    state.currentIndex = Math.floor(Math.random() * state.playlist.length)
+    state.value.currentIndex = Math.floor(Math.random() * state.value.playlist.length)
 
     nextTick(() => {
       audioPlay()
@@ -156,7 +172,8 @@ const nextPlay = () => {
 }
 //上一首
 const backPlay = () => {
-  state.currentIndex = state.currentIndex === 0 ? state.playlist.length - 1 : state.currentIndex - 1
+  state.value.currentIndex =
+    state.value.currentIndex === 0 ? state.value.playlist.length - 1 : state.value.currentIndex - 1
   playActive.value = true
   nextTick(() => {
     audioPlay()
@@ -166,7 +183,6 @@ const backPlay = () => {
 const changeSongSlider = () => {
   audio.value.currentTime = audio.value.duration * (songSlider.value / 100)
   currentTime.value = formatMillisecond(audio.value.currentTime * 1000)
-  console.log(songSlider.value / 100)
 }
 //点击音乐进度条改变时间
 const clickSongSlider = () => {
@@ -207,16 +223,16 @@ const toPlaylistQueue = () => {
 }
 //返回需要播放的歌曲详情
 const currentSong = computed(() => {
-  return state.playlist[state.currentIndex]
+  return state.value.playlist[state.value.currentIndex]
 })
 watch(song, (newValue) => {
   let flag = true //解决点击同一首歌问题
   nextTick(() => {
     audioPlay()
   })
-  state.playlist.forEach((item, index) => {
+  state.value.playlist.forEach((item, index) => {
     if (item.id === newValue.id) {
-      state.currentIndex = index
+      state.value.currentIndex = index
       flag = false
     }
   })
@@ -229,9 +245,20 @@ watch(song, (newValue) => {
       id: newValue.id,
       url: newValue.url
     }
-    state.playlist.splice(state.currentIndex, 0, obj)
+    state.value.playlist.splice(state.value.currentIndex, 0, obj)
   }
 })
+watch(
+  state,
+  () => {
+    if (state.value.playlist.length === 0) {
+      endTime.value = '00 : 00'
+      currentTime.value = '00 : 00'
+      songSlider.value = 0
+    }
+  },
+  { deep: true }
+)
 </script>
 <style scoped lang="less">
 .footer {
@@ -242,11 +269,35 @@ watch(song, (newValue) => {
   .left-area {
     width: 250px;
     overflow: hidden;
-    .pic {
+    .img-content {
+      position: relative;
       width: 60px;
       height: 60px;
-      border-radius: 10px;
+      cursor: pointer;
+      .pic {
+        width: 60px;
+        height: 60px;
+        border-radius: 10px;
+      }
+      .mask {
+        position: absolute;
+        display: none;
+        top: 0;
+        left: 0;
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.3);
+        img {
+          margin-top: 10px;
+        }
+      }
+      &:hover .mask {
+        display: block;
+      }
     }
+
     .song {
       display: flex;
       .name {
